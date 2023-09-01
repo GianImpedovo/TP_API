@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import entity.EdificioEntity;
 import vista.EdificioView;
 
 public class Edificio {
@@ -13,7 +14,9 @@ public class Edificio {
 	private String nombre;
 	private String direccion;
 	private List<Unidad> unidades;
-	
+
+	public Edificio() {}
+
 	public Edificio(int codigo, String nombre, String direccion) {
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -85,4 +88,9 @@ public class Edificio {
 	public EdificioView toView() {
 		return new EdificioView(codigo, nombre, direccion);
 	}
+
+	public EdificioEntity toEntity(){
+		return new EdificioEntity(this.codigo, this.nombre, this.direccion);
+	}
+
 }

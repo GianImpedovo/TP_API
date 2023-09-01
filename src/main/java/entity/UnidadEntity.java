@@ -8,14 +8,34 @@ import modelo.Edificio;
 public class UnidadEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int identificador;
 
-    private int piso;
-    private int numero;
+    private String piso;
+    private String numero;
     private char habitado;
-
     @ManyToOne
-    @JoinColumn(name = "codigoEdificio")
+    //@Column(name = "codigoEdificio")
+    @JoinColumn(name = "codigo_edificio")
     private EdificioEntity edificio; // fk con edificio
 
+    public int getIdentificador() {
+        return identificador;
+    }
+
+    public String getPiso() {
+        return piso;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public char getHabitado() {
+        return habitado;
+    }
+
+    public EdificioEntity getEdificio() {
+        return edificio;
+    }
 }

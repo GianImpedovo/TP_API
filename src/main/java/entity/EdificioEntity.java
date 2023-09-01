@@ -1,16 +1,17 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import modelo.Edificio;
 
 @Entity
 @Table(name="edificios")
 public class EdificioEntity {
+
+
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo")
 	private int codigo;
 	private String nombre;
 	private String direccion;
@@ -53,12 +54,5 @@ public class EdificioEntity {
 	public String toString() {
 		return "EdificioEntity [codigo=" + codigo + ", nombre=" + nombre + ", direccion=" + direccion + "]";
 	}
-	
-	public Edificio toNegocio() {
-		Edificio e = new Edificio(this.codigo, this.nombre, this.direccion);
-		return e;
-	}
-	
-	
 
 }
