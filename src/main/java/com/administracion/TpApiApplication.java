@@ -32,7 +32,6 @@ public class TpApiApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
 
 //		Edificio e = edificioDAO.toNegocio(edificioDAO.ObtenerEdificioEntityCodigo(1));
 //		System.out.println(e.toView().toString());
