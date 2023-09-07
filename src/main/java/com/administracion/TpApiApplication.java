@@ -1,7 +1,10 @@
 package com.administracion;
 
 import DAO.EdificioDAO;
+import DAO.PersonaDAO;
+import DAO.PersonaRepository;
 import DAO.UnidadDAO;
+import modelo.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,10 +23,15 @@ import modelo.Unidad;
 public class TpApiApplication implements CommandLineRunner{
 
 	@Autowired
+	PersonaDAO personaDAO;
+
+	@Autowired
 	UnidadDAO unidadDAO;
 
 	@Autowired
 	EdificioDAO edificioDAO;
+
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(TpApiApplication.class, args);
@@ -36,7 +44,9 @@ public class TpApiApplication implements CommandLineRunner{
 
 //		Edificio e = edificioDAO.toNegocio(edificioDAO.ObtenerEdificioEntityCodigo(1));
 //		System.out.println(e.toView().toString());
-		System.out.println(unidadDAO.obtenerUnidadByIdentificador(1).toView().toString());
+//		System.out.println(unidadDAO.obtenerUnidadByIdentificador(1).toView().toString());
+
+		System.out.println(personaDAO.obtenerPorDocumento("CI 13230978").toView().toString());
 
 		//Unidad unidad = unidadDAO.toNegocio(unidadDAO.obtenerUnidadByIdentificador(1));
 

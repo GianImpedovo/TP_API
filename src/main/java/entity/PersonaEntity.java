@@ -14,6 +14,19 @@ public class PersonaEntity {
     private String mail;
     private String contrasenia;
 
+    public String getDocumento() {
+        return documento;
+    }
 
+    public String getNombre() {
+        return nombre;
+    }
 
+    public String getMail() {
+        return mail;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
 }
