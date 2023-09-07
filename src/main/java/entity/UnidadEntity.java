@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 import modelo.Edificio;
+import org.hibernate.type.TrueFalseConverter;
 
 @Entity
 @Table(name = "unidades")
@@ -19,6 +20,16 @@ public class UnidadEntity {
     @JoinColumn(name = "codigo_edificio")
     private EdificioEntity edificio; // fk con edificio
 
+    public UnidadEntity() {}
+
+    public UnidadEntity(int identificador, String piso, String numero, char habitado, EdificioEntity edificio) {
+        this.identificador = identificador;
+        this.piso = piso;
+        this.numero = numero;
+        this.habitado = habitado;
+        this.edificio = edificio;
+    }
+
     public int getIdentificador() {
         return identificador;
     }
@@ -31,8 +42,10 @@ public class UnidadEntity {
         return numero;
     }
 
-    public char getHabitado() {
-        return habitado;
+    public boolean getHabitado() {
+        if (habitado != 'N')
+            return true;
+        return false;
     }
 
     public EdificioEntity getEdificio() {

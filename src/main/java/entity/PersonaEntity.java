@@ -14,6 +14,16 @@ public class PersonaEntity {
     private String mail;
     private String contrasenia;
 
+    public PersonaEntity() {
+    }
+
+    public PersonaEntity(String documento, String nombre, String mail, String contrasenia) {
+        this.documento = documento;
+        this.nombre = nombre;
+        this.mail = mail;
+        this.contrasenia = contrasenia;
+    }
+
     public String getDocumento() {
         return documento;
     }

@@ -3,6 +3,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.UnidadEntity;
 import excepciones.UnidadException;
 import vista.EdificioView;
 import vista.UnidadView;
@@ -78,6 +79,11 @@ public class Unidad {
 		return numero;
 	}
 
+	public char getHabitado(){
+		if (habitado)
+			return 'S';
+		return 'N';
+	}
 	
 	public Edificio getEdificio() {
 		return edificio;
@@ -95,4 +101,10 @@ public class Unidad {
 		EdificioView auxEdificio = edificio.toView();
 		return new UnidadView(id, piso, numero, habitado, auxEdificio);
 	}
+
+	public UnidadEntity toEntity(){
+		//int identificador, String piso, String numero, char habitado, EdificioEntity edificio
+		return new UnidadEntity(id, piso, numero, this.getHabitado(), edificio.toEntity());
+	}
+
 }

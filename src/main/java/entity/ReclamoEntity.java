@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class ReclamoEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idReclamo;
 
     @ManyToOne
@@ -23,6 +24,14 @@ public class ReclamoEntity {
     @JoinColumn(name = "identificador")
     private UnidadEntity unidad; // fk con unidad, no esta especificado en el diagrama sql
 
+    public ReclamoEntity() {}
 
-
+    public ReclamoEntity(int idReclamo, PersonaEntity persona, EdificioEntity edificio, String ubicacion, String descripcion, UnidadEntity unidad) {
+        this.idReclamo = idReclamo;
+        this.persona = persona;
+        this.edificio = edificio;
+        this.ubicacion = ubicacion;
+        this.descripcion = descripcion;
+        this.unidad = unidad;
+    }
 }

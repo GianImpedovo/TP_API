@@ -1,5 +1,7 @@
 package modelo;
 
+import entity.DuenioEntity;
+import entity.PersonaEntity;
 import vista.PersonaView;
 
 public class Persona {
@@ -40,4 +42,10 @@ public class Persona {
 	public PersonaView toView() {
 		return new PersonaView(documento, nombre);
 	}
+
+	public PersonaEntity toEntity(){
+		//String documento, String nombre, String mail, String contrasenia
+		return new PersonaEntity(documento, nombre, mail, password);
+	}
+
 }

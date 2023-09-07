@@ -1,17 +1,25 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "duenios")
 public class DuenioEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int identificador;
-    private String documento;
+    private int identificador; // fk con unidad
+    private String documento; // fk con persona
+
+    public DuenioEntity() {}
+
+    public DuenioEntity(int id, int identificador, String documento) {
+        this.id = id;
+        this.identificador = identificador;
+        this.documento = documento;
+    }
+
 
 
 

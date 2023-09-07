@@ -9,7 +9,7 @@ import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Repository
-public class PersonaDAO implements PersonaRepository{
+public class PersonaDAO{
 
 //    @Autowired
 //    PersonaRepository personaRepository;
