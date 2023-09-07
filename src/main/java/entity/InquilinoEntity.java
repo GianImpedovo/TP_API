@@ -21,4 +21,15 @@ public class InquilinoEntity {
         this.documento = documento;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getIdentificador() {
+        return identificador;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
 }

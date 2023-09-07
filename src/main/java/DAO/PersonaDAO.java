@@ -11,22 +11,17 @@ import java.util.Optional;
 @Repository
 public class PersonaDAO{
 
-//    @Autowired
-//    PersonaRepository personaRepository;
+    @Autowired
+    PersonaRepository personaRepository;
     private PersonaDAO personaDAO;
 
     public PersonaDAO(){}
 
-
-    public Optional<PersonaEntity> findByDocumento(String documento){
-        return findByDocumento(documento);
-    }
-
     public Persona obtenerPorDocumento(String documento){
-        Optional<PersonaEntity> recuperada = personaDAO.findByDocumento(documento);
+        Optional<PersonaEntity> recuperada = personaRepository.findByDocumento(documento);
         if (recuperada.isPresent())
             return toNegocio(recuperada.get());
-        return null;
+        return toNegocio(recuperada.get());
     }
 
     public Persona toNegocio(PersonaEntity p){
