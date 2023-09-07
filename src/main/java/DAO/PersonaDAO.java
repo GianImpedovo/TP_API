@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,7 +15,6 @@ public class PersonaDAO{
 
     @Autowired
     PersonaRepository personaRepository;
-    private PersonaDAO personaDAO;
 
     public PersonaDAO(){}
 
@@ -22,6 +23,14 @@ public class PersonaDAO{
         if (recuperada.isPresent())
             return toNegocio(recuperada.get());
         return toNegocio(recuperada.get());
+    }
+
+    public List<Persona> obtenerPersonas(){
+        List<PersonaEntity> personasEntidad = personaRepository.findAll();
+        List<Persona> personas = new ArrayList<>();
+        for (PersonaEntity pe: personasEntidad)
+            personas.add(toNegocio(pe));
+        return personas;
     }
 
     public Persona toNegocio(PersonaEntity p){

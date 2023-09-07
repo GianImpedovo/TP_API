@@ -34,4 +34,28 @@ public class ReclamoEntity {
         this.descripcion = descripcion;
         this.unidad = unidad;
     }
+
+    public int getIdReclamo() {
+        return idReclamo;
+    }
+
+    public PersonaEntity getPersona() {
+        return persona;
+    }
+
+    public EdificioEntity getEdificio() {
+        return edificio;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public UnidadEntity getUnidad() {
+        return unidad;
+    }
 }

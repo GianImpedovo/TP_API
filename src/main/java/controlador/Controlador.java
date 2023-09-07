@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import DAO.EdificioDAO;
+import DAO.UnidadDAO;
 import excepciones.EdificioException;
 import excepciones.PersonaException;
 import excepciones.ReclamoException;
@@ -12,35 +14,47 @@ import modelo.Edificio;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import vista.EdificioView;
 import vista.Estado;
 import vista.PersonaView;
 import vista.ReclamoView;
 import vista.UnidadView;
 
+
+@Controller
 public class Controlador {
 
-	private static Controlador instancia;
-	
-	private Controlador() { }
-	
-	public static Controlador getInstancia() {
-		if(instancia == null)
-			instancia = new Controlador();
-		return instancia;
-	}
+	@Autowired
+	EdificioDAO edificioDAO;
+
+	@Autowired
+	UnidadDAO unidadDAO;
+
 	
 	public List<EdificioView> getEdificios(){
-		return null;
+		List<Edificio> edificiosNegocio = edificioDAO.obtenerTodosEdificios();
+		List<EdificioView> edificios = new ArrayList<>();
+		for (Edificio e: edificiosNegocio)
+			edificios.add(e.toView());
+		return edificios;
 	}
 	
 	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
 		List<UnidadView> resultado = new ArrayList<UnidadView>();
 		Edificio edificio = buscarEdificio(codigo);
+		agregarUnidadesEdificio(edificio);
 		List<Unidad> unidades = edificio.getUnidades();
 		for(Unidad unidad : unidades)
 			resultado.add(unidad.toView());
 		return resultado;
+	}
+
+	public void agregarUnidadesEdificio(Edificio e){
+		List<Unidad> unidades = unidadDAO.obtenerUnidadCodEdificio(e.getCodigo());
+		for (Unidad u: unidades)
+			e.agregarUnidad(u);
 	}
 	
 	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
@@ -171,11 +185,13 @@ public class Controlador {
 	}
 	
 	private Edificio buscarEdificio(int codigo) throws EdificioException {
-		return null;
+		Edificio edificio = edificioDAO.ObtenerEdificioCodigo(codigo);
+		return edificio;
 	}
 
-	private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException{
-		return null;
+	public Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException{
+		Unidad u = unidadDAO.obtenerUnidadByIdentificador(codigo);
+		return u;
 	}	
 	
 	private Persona buscarPersona(String documento) throws PersonaException {
@@ -185,4 +201,5 @@ public class Controlador {
 	private Reclamo buscarReclamo(int numero) throws ReclamoException {
 		return null;
 	}
+
 }
