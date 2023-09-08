@@ -39,4 +39,20 @@ public class PersonaEntity {
     public String getContrasenia() {
         return contrasenia;
     }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
 }

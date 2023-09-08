@@ -22,7 +22,7 @@ public class Edificio {
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.direccion = direccion;
-		unidades = new ArrayList<Unidad>();
+		this.unidades = new ArrayList<Unidad>();
 	}
 	
 	public void agregarUnidad(Unidad unidad) {
@@ -58,12 +58,13 @@ public class Edificio {
 		return unidades;
 	}
 
+
 	public Set<Persona> duenios() {
 		Set<Persona> resultado = new HashSet<Persona>();
 		for(Unidad unidad : unidades) {
 			List<Persona> duenios = unidad.getDuenios();
 			for(Persona p : duenios)
-				duenios.add(p);
+				resultado.add(p);
 		}
 		return resultado;
 	}
@@ -73,6 +74,7 @@ public class Edificio {
 		for(Unidad unidad : unidades) {
 			if(unidad.estaHabitado()) {
 				List<Persona> inquilinos = unidad.getInquilinos();
+
 				if(inquilinos.size() > 0) 
 					for(Persona p : inquilinos)
 						resultado.add(p);
@@ -96,5 +98,4 @@ public class Edificio {
 			unidadesEntity.add(u.toEntity());
 		return new EdificioEntity(this.codigo, this.nombre, this.direccion, unidadesEntity);
 	}
-
 }

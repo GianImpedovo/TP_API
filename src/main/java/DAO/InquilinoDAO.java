@@ -34,4 +34,24 @@ public class InquilinoDAO {
         // String documento, String nombre, String mail, String password
         return personaDAO.obtenerPorDocumento(ie.getDocumento());
     }
+
+    public List<Persona> obtenerInquilinoPorIdentificador(int identificador){
+        List<Persona> personas = new ArrayList<>();
+        List<InquilinoEntity> inquilinos = inquilinoRepository.findAllByIdentificador(identificador);
+        for (InquilinoEntity i: inquilinos){
+            Persona persona = personaDAO.obtenerPorDocumento(i.getDocumento());
+            personas.add(persona);
+        }
+        return personas;
+    }
+
+    public List<Persona> obtenerInquilino(){
+        List<Persona> personas = new ArrayList<>();
+        List<InquilinoEntity> inquilinos = inquilinoRepository.findAll();
+        for (InquilinoEntity i: inquilinos){
+            Persona persona = personaDAO.obtenerPorDocumento(i.getDocumento());
+            personas.add(persona);
+        }
+        return personas;
+    }
 }

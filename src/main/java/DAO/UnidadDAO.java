@@ -1,11 +1,13 @@
 package DAO;
 
 
-import entity.EdificioEntity;
-import entity.UnidadEntity;
+import entity.*;
+import modelo.Persona;
+import org.hibernate.sql.results.graph.entity.internal.EntityDelayedFetchImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,8 +44,8 @@ public class UnidadDAO {
     }
 
     public Unidad toNegocio(UnidadEntity ue){
-        Edificio nuevoEdificio = edificioDAO.toNegocio(ue.getEdificio());
-        Unidad u = new Unidad(ue.getIdentificador(), ue.getPiso(), ue.getNumero(), nuevoEdificio);
+        Edificio edificio = edificioDAO.toNegocio(ue.getEdificio());
+        Unidad u = new Unidad(ue.getIdentificador(), ue.getPiso(), ue.getNumero(), ue.getHabitado(), edificio);
         return u;
     }
 

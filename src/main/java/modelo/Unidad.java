@@ -18,11 +18,11 @@ public class Unidad {
 	private List<Persona> duenios;
 	private List<Persona> inquilinos;
 	
-	public Unidad(int id, String piso, String numero, Edificio edificio) {
+	public Unidad(int id, String piso, String numero, boolean habitado,Edificio edificio) {
 		this.id = id;
 		this.piso = piso;
 		this.numero = numero;
-		this.habitado = false;
+		this.habitado = habitado;
 		this.edificio = edificio;
 		this.duenios = new ArrayList<Persona>();
 		this.inquilinos = new ArrayList<Persona>();
@@ -107,4 +107,15 @@ public class Unidad {
 		return new UnidadEntity(id, piso, numero, this.getHabitado(), edificio.toEntity());
 	}
 
+	public void setInquilinos(List<Persona> inquilinos){
+		this.inquilinos = inquilinos;
+	}
+
+	public void setDuenios(List<Persona> duenios){
+		this.duenios = duenios;
+	}
+
+	public void setEdificio(Edificio edificio){
+		this.edificio = edificio;
+	}
 }

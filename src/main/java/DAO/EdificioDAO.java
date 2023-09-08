@@ -46,15 +46,23 @@ public class EdificioDAO {
         edificioRepositorio.save(e);
     }
 
-    public List<UnidadEntity> obtenerUnidadesEdificio(int codigo){
-        List<UnidadEntity> unidades = new ArrayList<>();
-        Optional<EdificioEntity> ee= edificioRepositorio.findByCodigo(codigo);
-        if (ee.isPresent()){
-            for (UnidadEntity ue: ee.get().getUnidades())
-                unidades.add(ue);
-        }
-        return unidades;
-    }
+//    public List<UnidadEntity> obtenerUnidadesEdificio(int codigo){
+//        Optional<EdificioEntity> ee= edificioRepositorio.findByCodigo(codigo);
+//        if (ee.isPresent()){
+//            agregarUnidadesAlEdificio(ee.get());
+//        }
+//        return ee.get().getUnidades();
+//    }
+
+//    public void agregarUnidadesAlEdificio(EdificioEntity edificio){
+//        List<UnidadEntity> unidades = new ArrayList<>();
+//        Optional<EdificioEntity> ee= edificioRepositorio.findByCodigo(edificio.getCodigo());
+//        if (ee.isPresent()){
+//            for (UnidadEntity ue: ee.get().getUnidades())
+//                unidades.add(ue);
+//        }
+//        edificio.setUnidades(unidades);
+//    }
 
     public Edificio toNegocio(EdificioEntity ee){
         Edificio e = new Edificio(ee.getCodigo(), ee.getNombre(), ee.getDireccion());

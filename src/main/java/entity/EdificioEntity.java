@@ -45,4 +45,8 @@ public class EdificioEntity {
 	public List<UnidadEntity> getUnidades() {
 		return unidades;
 	}
+
+	public void setUnidades(List<UnidadEntity> unidades){
+		this.unidades = unidades;
+	}
 }

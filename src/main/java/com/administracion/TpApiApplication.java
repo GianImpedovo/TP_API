@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import modelo.Edificio;
 import vista.EdificioView;
+import vista.PersonaView;
 import vista.UnidadView;
 
 import java.util.ArrayList;
@@ -28,12 +29,14 @@ import modelo.Unidad;
 @ComponentScan(basePackages = {"DAO", "entity", "controlador"})
 public class TpApiApplication implements CommandLineRunner{
 
-	@Autowired
-	UnidadDAO unidadDAO;
-//
-	@Autowired
-	EdificioDAO edificioDAO;
+//	@Autowired
+//	UnidadDAO unidadDAO;
+//	@Autowired
+//	EdificioDAO edificioDAO;
 
+
+@Autowired
+Controlador controlador;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TpApiApplication.class, args);
@@ -47,25 +50,15 @@ public class TpApiApplication implements CommandLineRunner{
 //		for (EdificioView e: edificios)
 //			System.out.println(e.toString());
 
-//		List<UnidadView> unidades = controlador.getUnidadesPorEdificio(2);
-//		for (UnidadView u: unidades)
+
+//		List<PersonaView> vistas = controlador.habilitadosPorEdificio(1);
+//		//System.out.println(vistas.size());
+//		for (PersonaView u: vistas)
 //			System.out.println(u.toString());
 
-//		System.out.println(controlador.buscarUnidad(1,"2","2").toView().toString());
-
-		List<UnidadEntity> unidades = edificioDAO.obtenerUnidadesEdificio(2);
-//		List<Unidad> unidades = edificio.getUnidades();
-//		System.out.println(edificio.toView().toString());
-//		System.out.println(edificio.getUnidades().size());
-		List<Unidad> uni = new ArrayList<>();
-		for (UnidadEntity ue: unidades)
-			uni.add(unidadDAO.toNegocio(ue));
-
-		for (Unidad u: uni)
-			System.out.println(u.toView().toString());
-
-
-
+		List<PersonaView> unidad = controlador.inquilinosPorUnidad(1, "9", "4");
+		for (PersonaView u: unidad)
+			System.out.println(u.toString());
 	}
 
 }
