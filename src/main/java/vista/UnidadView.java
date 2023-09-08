@@ -59,6 +59,6 @@ public class UnidadView {
 	}
 	
 	public String toString() {
-		return piso + " " + numero;
+		return piso + " " + numero + edificio.toString();
 	}
 }

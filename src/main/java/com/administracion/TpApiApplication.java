@@ -3,6 +3,8 @@ package com.administracion;
 import DAO.*;
 import controlador.Controlador;
 import entity.DuenioEntity;
+import entity.EdificioEntity;
+import entity.UnidadEntity;
 import modelo.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,8 +18,9 @@ import modelo.Edificio;
 import vista.EdificioView;
 import vista.UnidadView;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import modelo.Unidad;
 
 @SpringBootApplication
 @EntityScan("entity")
@@ -26,7 +29,11 @@ import java.util.List;
 public class TpApiApplication implements CommandLineRunner{
 
 	@Autowired
-	Controlador controlador;
+	UnidadDAO unidadDAO;
+//
+	@Autowired
+	EdificioDAO edificioDAO;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(TpApiApplication.class, args);
@@ -44,7 +51,21 @@ public class TpApiApplication implements CommandLineRunner{
 //		for (UnidadView u: unidades)
 //			System.out.println(u.toString());
 
-		System.out.println(controlador.buscarUnidad(1,"2","2").toView().toString());
+//		System.out.println(controlador.buscarUnidad(1,"2","2").toView().toString());
+
+		List<UnidadEntity> unidades = edificioDAO.obtenerUnidadesEdificio(2);
+//		List<Unidad> unidades = edificio.getUnidades();
+//		System.out.println(edificio.toView().toString());
+//		System.out.println(edificio.getUnidades().size());
+		List<Unidad> uni = new ArrayList<>();
+		for (UnidadEntity ue: unidades)
+			uni.add(unidadDAO.toNegocio(ue));
+
+		for (Unidad u: uni)
+			System.out.println(u.toView().toString());
+
+
+
 	}
 
 }

@@ -1,6 +1,7 @@
 package DAO;
 
 
+import entity.EdificioEntity;
 import entity.UnidadEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,12 +16,10 @@ import modelo.Edificio;
 public class UnidadDAO {
 
     @Autowired
-    EdificioDAO edificioDAO;
-
-    @Autowired
     UnidadRepository unidadRespository;
 
-    public UnidadDAO() {}
+    @Autowired
+    EdificioDAO edificioDAO;
 
 //        Verificar que se realiza la inyeccion
 //    public void init() {
@@ -35,7 +34,6 @@ public class UnidadDAO {
         return unidades;
     }
 
-
     public Unidad obtenerUnidadByIdentificador(int id){
         Optional<UnidadEntity> unidadEntity = unidadRespository.findByIdentificador(id);
         if (unidadEntity.isPresent())
@@ -43,20 +41,10 @@ public class UnidadDAO {
         return null;
     }
 
-    public List<Unidad> obtenerUnidadCodEdificio(int codigo){
-        List<UnidadEntity> unidadesEntity = unidadRespository.findByCodigo(codigo);
-        List<Unidad> unidades = new ArrayList<>();
-        for (UnidadEntity u: unidadesEntity)
-            unidades.add(toNegocio(u));
-        return unidades;
-    }
-
     public Unidad toNegocio(UnidadEntity ue){
         Edificio nuevoEdificio = edificioDAO.toNegocio(ue.getEdificio());
         Unidad u = new Unidad(ue.getIdentificador(), ue.getPiso(), ue.getNumero(), nuevoEdificio);
-        nuevoEdificio.agregarUnidad(u);
         return u;
     }
-
 
 }

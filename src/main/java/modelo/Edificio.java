@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import entity.EdificioEntity;
+import entity.UnidadEntity;
 import vista.EdificioView;
 
 public class Edificio {
@@ -90,7 +91,10 @@ public class Edificio {
 	}
 
 	public EdificioEntity toEntity(){
-		return new EdificioEntity(this.codigo, this.nombre, this.direccion);
+		List<UnidadEntity> unidadesEntity = new ArrayList<>();
+		for(Unidad u: unidades)
+			unidadesEntity.add(u.toEntity());
+		return new EdificioEntity(this.codigo, this.nombre, this.direccion, unidadesEntity);
 	}
 
 }

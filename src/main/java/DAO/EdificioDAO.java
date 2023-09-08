@@ -46,6 +46,16 @@ public class EdificioDAO {
         edificioRepositorio.save(e);
     }
 
+    public List<UnidadEntity> obtenerUnidadesEdificio(int codigo){
+        List<UnidadEntity> unidades = new ArrayList<>();
+        Optional<EdificioEntity> ee= edificioRepositorio.findByCodigo(codigo);
+        if (ee.isPresent()){
+            for (UnidadEntity ue: ee.get().getUnidades())
+                unidades.add(ue);
+        }
+        return unidades;
+    }
+
     public Edificio toNegocio(EdificioEntity ee){
         Edificio e = new Edificio(ee.getCodigo(), ee.getNombre(), ee.getDireccion());
         return e;

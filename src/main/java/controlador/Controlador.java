@@ -44,17 +44,11 @@ public class Controlador {
 	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
 		List<UnidadView> resultado = new ArrayList<UnidadView>();
 		Edificio edificio = buscarEdificio(codigo);
-		agregarUnidadesEdificio(edificio);
+//		agregarUnidadesEdificio(edificio);
 		List<Unidad> unidades = edificio.getUnidades();
 		for(Unidad unidad : unidades)
 			resultado.add(unidad.toView());
 		return resultado;
-	}
-
-	public void agregarUnidadesEdificio(Edificio e){
-		List<Unidad> unidades = unidadDAO.obtenerUnidadCodEdificio(e.getCodigo());
-		for (Unidad u: unidades)
-			e.agregarUnidad(u);
 	}
 	
 	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
