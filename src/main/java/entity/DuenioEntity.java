@@ -9,13 +9,17 @@ public class DuenioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int identificador; // fk con unidad
-    private String documento; // fk con persona
+    @ManyToOne
+    @JoinColumn(name = "identificador")
+    private UnidadEntity identificador; // fk con unidad
+
+    @ManyToOne
+    @JoinColumn(name = "documento")
+    private PersonaEntity documento; // fk con persona
 
     public DuenioEntity() {}
 
-    public DuenioEntity(int id, int identificador, String documento) {
-        this.id = id;
+    public DuenioEntity(UnidadEntity identificador, PersonaEntity documento) {
         this.identificador = identificador;
         this.documento = documento;
     }
@@ -24,11 +28,19 @@ public class DuenioEntity {
         return id;
     }
 
-    public int getIdentificador() {
+    public UnidadEntity getIdentificador() {
         return identificador;
     }
 
-    public String getDocumento() {
+    public PersonaEntity getDocumento() {
         return documento;
+    }
+
+    public void setIdentificador(UnidadEntity identificador) {
+        this.identificador = identificador;
+    }
+
+    public void setDocumento(PersonaEntity documento) {
+        this.documento = documento;
     }
 }

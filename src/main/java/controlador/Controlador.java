@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import DAO.*;
-import entity.UnidadEntity;
+import DAO.EdificioDAO;
+import DAO.UnidadDAO;
 import excepciones.EdificioException;
 import excepciones.PersonaException;
 import excepciones.ReclamoException;
 import excepciones.UnidadException;
+import jakarta.persistence.Column;
 import modelo.Edificio;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Controller;
 import vista.EdificioView;
 import vista.Estado;
@@ -22,12 +26,8 @@ import vista.PersonaView;
 import vista.ReclamoView;
 import vista.UnidadView;
 
-
 @Controller
 public class Controlador {
-
-	@Autowired
-	PersonaDAO personaDAO;
 
 	@Autowired
 	EdificioDAO edificioDAO;
@@ -35,24 +35,26 @@ public class Controlador {
 	@Autowired
 	UnidadDAO unidadDAO;
 
-	@Autowired
-	DuenioDAO duenioDAO;
+//	private static Controlador instancia;
+//
+//	private Controlador() { }
+//
+//	public static Controlador getInstancia() {
+//		if(instancia == null)
+//			instancia = new Controlador();
+//		return instancia;
+//	}
 
-	@Autowired
-	InquilinoDAO inquilinoDAO;
-
-
-
-	// Listo
+	//Listo
 	public List<EdificioView> getEdificios(){
-		List<Edificio> edificiosNegocio = edificioDAO.obtenerTodosEdificios();
-		List<EdificioView> edificios = new ArrayList<>();
-		for (Edificio e: edificiosNegocio)
-			edificios.add(e.toView());
-		return edificios;
+		List<Edificio> edificios = edificioDAO.obtenerTodosEdificios();
+		List<EdificioView> edificioViews = new ArrayList<>();
+		for (Edificio e: edificios)
+			edificioViews.add(e.toView());
+		return edificioViews;
 	}
 
-	// Listo
+	// [x]
 	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
 		List<UnidadView> resultado = new ArrayList<UnidadView>();
 		Edificio edificio = buscarEdificio(codigo);
@@ -62,8 +64,7 @@ public class Controlador {
 		return resultado;
 	}
 
-
-	// Listo
+	// []
 	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
@@ -73,7 +74,7 @@ public class Controlador {
 		return resultado;
 	}
 
-	// Listo
+	// [x]
 	public List<PersonaView> dueniosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
@@ -83,7 +84,7 @@ public class Controlador {
 		return resultado;
 	}
 
-	// Listo
+	// [x]
 	public List<PersonaView> habitantesPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
@@ -93,7 +94,7 @@ public class Controlador {
 		return resultado;
 	}
 
-	// Listo
+	//[x]
 	public List<PersonaView> dueniosPorUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
@@ -103,7 +104,7 @@ public class Controlador {
 		return resultado;
 	}
 
-	// Listo
+	//[x]
 	public List<PersonaView> inquilinosPorUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
@@ -113,25 +114,28 @@ public class Controlador {
 		return resultado;
 	}
 
-	// Pasa el duenio antiguo al nuevo duenio ingresado.
+	//[]
 	public void transferirUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException, EdificioException {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		unidad.transferir(persona);
 	}
 
+	//[]
 	public void agregarDuenioUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException, EdificioException {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		unidad.agregarDuenio(persona);
 	}
 
+	//[]
 	public void alquilarUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException, EdificioException{
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		unidad.alquilar(persona);
 	}
 
+	//[]
 	public void agregarInquilinoUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException, EdificioException{
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
@@ -197,55 +201,24 @@ public class Controlador {
 	}
 	
 	private Edificio buscarEdificio(int codigo) throws EdificioException {
-		Edificio edificio = edificioDAO.ObtenerEdificioCodigo(codigo);
-		agregarUnidadesEdificio(edificio);
+		Edificio edificio = edificioDAO.obtenerEdificioCodigo(codigo);
 		return edificio;
-	}
-
-	public void agregarUnidadesEdificio(Edificio edificio){
-		List<Unidad> unidades = unidadDAO.obtenerTodasUnidades();
-		for (Unidad u: unidades){
-			if (u.getEdificio().getCodigo() == edificio.getCodigo()){
-				agregarPersonas(u);
-				edificio.agregarUnidad(u);
-			}
-		}
-	}
-
-	private Unidad buscarUnidad(int identificador) throws UnidadException{
-		Unidad u = unidadDAO.obtenerUnidadByIdentificador(identificador);
-		agregarPersonas(u);
-		return u;
 	}
 
 	private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException{
 		Edificio edificio = buscarEdificio(codigo);
-		List<Unidad> unidades = edificio.getUnidades();
-		System.out.println(unidades.size());
-		for (Unidad u: unidades)
-			if (u.getPiso().equals(piso) && u.getNumero().equals(numero) )
-				return u;
-		return null;
-	}
-
-	public void agregarPersonas(Unidad u){
-		List<Persona> duenios = duenioDAO.obtenerDueniosIdentificador(u.getId());
-		for (Persona p: duenios)
-			u.agregarDuenio(p);
-
-		List<Persona> inquilinos = inquilinoDAO.obtenerInquilinoPorIdentificador(u.getId());
-		for (Persona p: inquilinos)
-			u.agregarInquilino(p);
-
+		Unidad resultado = null;
+		for (Unidad u: edificio.getUnidades())
+			if (u.getNumero().equals(numero) && u.getPiso().equals(piso))
+				resultado = u;
+		return resultado;
 	}
 	
 	private Persona buscarPersona(String documento) throws PersonaException {
-		Persona persona = personaDAO.obtenerPorDocumento(documento);
-		return persona;
+		return null;
 	}
 	
 	private Reclamo buscarReclamo(int numero) throws ReclamoException {
 		return null;
 	}
-
 }

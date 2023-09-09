@@ -13,25 +13,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Component
 public class EdificioDAO {
 
     @Autowired
     EdificioRepository edificioRepositorio;
 
+    @Autowired
+    UnidadDAO unidadDAO;
+
 
     //Verificar que se realiza la inyeccion
     public void init() {
         System.out.println("Se inyecta EdificioRepository: " + (edificioRepositorio != null));
-    }
-
-    public Edificio ObtenerEdificioCodigo(int codigo){
-        Optional<EdificioEntity> ee = edificioRepositorio.findByCodigo(codigo);
-
-        if (ee.isPresent()){
-            return toNegocio(ee.get());
-        }
-        return toNegocio(ee.get());
     }
 
     public List<Edificio> obtenerTodosEdificios(){
@@ -42,31 +35,19 @@ public class EdificioDAO {
         return edificios;
     }
 
-    public void guardarEdificio(EdificioEntity e){
-        edificioRepositorio.save(e);
+    public Edificio obtenerEdificioCodigo(int codigo){
+        Optional<EdificioEntity> edificio = edificioRepositorio.findByCodigo(codigo);
+        if (edificio.isPresent())
+            return toNegocio(edificio.get());
+        return null;
     }
-
-//    public List<UnidadEntity> obtenerUnidadesEdificio(int codigo){
-//        Optional<EdificioEntity> ee= edificioRepositorio.findByCodigo(codigo);
-//        if (ee.isPresent()){
-//            agregarUnidadesAlEdificio(ee.get());
-//        }
-//        return ee.get().getUnidades();
-//    }
-
-//    public void agregarUnidadesAlEdificio(EdificioEntity edificio){
-//        List<UnidadEntity> unidades = new ArrayList<>();
-//        Optional<EdificioEntity> ee= edificioRepositorio.findByCodigo(edificio.getCodigo());
-//        if (ee.isPresent()){
-//            for (UnidadEntity ue: ee.get().getUnidades())
-//                unidades.add(ue);
-//        }
-//        edificio.setUnidades(unidades);
-//    }
 
     public Edificio toNegocio(EdificioEntity ee){
-        Edificio e = new Edificio(ee.getCodigo(), ee.getNombre(), ee.getDireccion());
-        return e;
+        Edificio edificio = new Edificio(ee.getCodigo(), ee.getNombre(), ee.getDireccion());
+        List<Unidad> unidades = new ArrayList<>();
+        for (UnidadEntity ue: ee.getUnidades())
+            unidades.add(unidadDAO.toNegocio(ue, edificio));
+        edificio.setUnidades(unidades);
+        return edificio;
     }
-
 }

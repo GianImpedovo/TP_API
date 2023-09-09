@@ -21,32 +21,27 @@ public class UnidadDAO {
     UnidadRepository unidadRespository;
 
     @Autowired
-    EdificioDAO edificioDAO;
+    DuenioDAO duenioDAO;
+
+    @Autowired
+    InquilinoDAO inquilinoDAO;
+
 
 //        Verificar que se realiza la inyeccion
 //    public void init() {
 //        System.out.println("Se inyecta unidadRespository: " + (unidadRespository != null));
 //    }
 
-    public List<Unidad> obtenerTodasUnidades(){
-        List<UnidadEntity> unidadesEntity = unidadRespository.findAll();
-        List<Unidad> unidades = new ArrayList<>();
-        for (UnidadEntity u: unidadesEntity)
-            unidades.add(toNegocio(u));
-        return unidades;
-    }
 
-    public Unidad obtenerUnidadByIdentificador(int id){
-        Optional<UnidadEntity> unidadEntity = unidadRespository.findByIdentificador(id);
-        if (unidadEntity.isPresent())
-            return toNegocio(unidadEntity.get());
-        return null;
-    }
-
-    public Unidad toNegocio(UnidadEntity ue){
-        Edificio edificio = edificioDAO.toNegocio(ue.getEdificio());
-        Unidad u = new Unidad(ue.getIdentificador(), ue.getPiso(), ue.getNumero(), ue.getHabitado(), edificio);
+    public Unidad toNegocio(UnidadEntity unidad, Edificio edificio){
+        //int id, String piso, String numero, boolean habitado,Edificio edificio
+        Unidad u = new Unidad(unidad.getIdentificador(), unidad.getPiso(), unidad.getNumero(), unidad.getHabitado(), edificio);
+        List<Persona> duenios = duenioDAO.obtenerPorUnidad(unidad);
+        List<Persona> inquilinos = inquilinoDAO.obtenerPorUnidad(unidad);
+        u.setDuenios(duenios);
+        u.setInquilinos(inquilinos);
         return u;
     }
+
 
 }

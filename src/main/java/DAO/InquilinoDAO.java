@@ -2,6 +2,8 @@ package DAO;
 
 import entity.DuenioEntity;
 import entity.InquilinoEntity;
+import entity.PersonaEntity;
+import entity.UnidadEntity;
 import modelo.Persona;
 import org.aspectj.weaver.ast.Literal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,42 +18,19 @@ public class InquilinoDAO {
     @Autowired
     InquilinoRepository inquilinoRepository;
 
-    @Autowired
-    PersonaDAO personaDAO;
-
     public InquilinoDAO(){}
 
-    public List<Persona> obtenerTodosInquilinos(){
-        List<InquilinoEntity> inquilinos = inquilinoRepository.findAll();
-        List<Persona> personas = new ArrayList<>();
-        for (InquilinoEntity i: inquilinos){
-            personas.add(toNegocio(i));
-        }
-        return personas;
+    public List<Persona> obtenerPorUnidad(UnidadEntity unidad){
+        List<InquilinoEntity> personas = inquilinoRepository.findByIdentificador(unidad);
+        List<Persona> resultado = new ArrayList<>();
+        for (InquilinoEntity p: personas)
+            resultado.add(toNegocioPersona(p.getDocumento()));
+        return resultado;
     }
 
-    public Persona toNegocio(InquilinoEntity ie){
-        // String documento, String nombre, String mail, String password
-        return personaDAO.obtenerPorDocumento(ie.getDocumento());
+    public Persona toNegocioPersona(PersonaEntity p){
+        Persona persona = new Persona(p.getDocumento(), p.getNombre(), p.getMail(), p.getContrasenia());
+        return persona;
     }
 
-    public List<Persona> obtenerInquilinoPorIdentificador(int identificador){
-        List<Persona> personas = new ArrayList<>();
-        List<InquilinoEntity> inquilinos = inquilinoRepository.findAllByIdentificador(identificador);
-        for (InquilinoEntity i: inquilinos){
-            Persona persona = personaDAO.obtenerPorDocumento(i.getDocumento());
-            personas.add(persona);
-        }
-        return personas;
-    }
-
-    public List<Persona> obtenerInquilino(){
-        List<Persona> personas = new ArrayList<>();
-        List<InquilinoEntity> inquilinos = inquilinoRepository.findAll();
-        for (InquilinoEntity i: inquilinos){
-            Persona persona = personaDAO.obtenerPorDocumento(i.getDocumento());
-            personas.add(persona);
-        }
-        return personas;
-    }
 }

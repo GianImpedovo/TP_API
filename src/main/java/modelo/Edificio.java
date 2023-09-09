@@ -24,7 +24,14 @@ public class Edificio {
 		this.direccion = direccion;
 		this.unidades = new ArrayList<Unidad>();
 	}
-	
+
+	public Edificio(int codigo, String nombre, String direccion, List<Unidad> unidades) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.unidades = unidades;
+	}
+
 	public void agregarUnidad(Unidad unidad) {
 		unidades.add(unidad);
 	}
@@ -58,6 +65,9 @@ public class Edificio {
 		return unidades;
 	}
 
+	public void setUnidades(List<Unidad> unidades){
+		this.unidades = unidades;
+	}
 
 	public Set<Persona> duenios() {
 		Set<Persona> resultado = new HashSet<Persona>();

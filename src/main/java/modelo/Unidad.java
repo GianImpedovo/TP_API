@@ -28,6 +28,16 @@ public class Unidad {
 		this.inquilinos = new ArrayList<Persona>();
 	}
 
+	public Unidad(int id, String piso, String numero, boolean habitado) {
+		this.id = id;
+		this.piso = piso;
+		this.numero = numero;
+		this.habitado = habitado;
+		this.edificio = null;
+		this.duenios = new ArrayList<Persona>();
+		this.inquilinos = new ArrayList<Persona>();
+	}
+
 	public void transferir(Persona nuevoDuenio) {
 		duenios = new ArrayList<Persona>();
 		duenios.add(nuevoDuenio);

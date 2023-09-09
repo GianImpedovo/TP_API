@@ -4,6 +4,7 @@ import DAO.*;
 import controlador.Controlador;
 import entity.DuenioEntity;
 import entity.EdificioEntity;
+import entity.PersonaEntity;
 import entity.UnidadEntity;
 import modelo.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,8 @@ import modelo.Unidad;
 @ComponentScan(basePackages = {"DAO", "entity", "controlador"})
 public class TpApiApplication implements CommandLineRunner{
 
-//	@Autowired
-//	UnidadDAO unidadDAO;
-//	@Autowired
-//	EdificioDAO edificioDAO;
-
-
-@Autowired
-Controlador controlador;
+	@Autowired
+	Controlador controlador;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TpApiApplication.class, args);
@@ -45,20 +40,17 @@ Controlador controlador;
 
 	@Override
 	public void run(String... args) throws Exception {
-
 //		List<EdificioView> edificios = controlador.getEdificios();
 //		for (EdificioView e: edificios)
 //			System.out.println(e.toString());
 
-
-//		List<PersonaView> vistas = controlador.habilitadosPorEdificio(1);
-//		//System.out.println(vistas.size());
-//		for (PersonaView u: vistas)
-//			System.out.println(u.toString());
-
-		List<PersonaView> unidad = controlador.inquilinosPorUnidad(1, "9", "4");
-		for (PersonaView u: unidad)
+		List<PersonaView> unidadesView = controlador.dueniosPorUnidad(1, "70", "23");
+		//System.out.println(unidadesView.size());
+		for (PersonaView u: unidadesView)
 			System.out.println(u.toString());
+
+
+
 	}
 
 }
