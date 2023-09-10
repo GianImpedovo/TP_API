@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import DAO.DuenioDAO;
-import DAO.EdificioDAO;
-import DAO.PersonaDAO;
-import DAO.UnidadDAO;
+import DAO.*;
 import excepciones.EdificioException;
 import excepciones.PersonaException;
 import excepciones.ReclamoException;
@@ -42,6 +39,9 @@ public class Controlador {
 
 	@Autowired
 	PersonaDAO personaDAO;
+
+	@Autowired
+	ReclamoDAO reclamoDAO;
 
 //	private static Controlador instancia;
 //
@@ -145,25 +145,31 @@ public class Controlador {
 		unidadDAO.agregarDuenioUnidad(persona.toEntity(), unidad.toEntity());
 	}
 
-	//[]
+	//[x]
 	public void alquilarUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException, EdificioException{
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		unidad.alquilar(persona);
+		unidadDAO.cambiarHabitado(unidad.toEntity());
+		unidadDAO.agregarInquilino(unidad.toEntity(), persona.toEntity());
 	}
 
-	//[]
+	//[x]
 	public void agregarInquilinoUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException, EdificioException{
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		unidad.agregarInquilino(persona);
+		unidadDAO.agregarInquilino(unidad.toEntity(), persona.toEntity());
 	}
 
+	// [x]
 	public void liberarUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		unidad.liberar();
+		unidadDAO.eliminarInquilinos(unidad.toEntity());
 	}
-	
+
+	//[]
 	public void habitarUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		unidad.habitar();;
@@ -200,25 +206,35 @@ public class Controlador {
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
 		return resultado;
 	}
- 
+
+	// [x]
 	public int agregarReclamo(int codigo, String piso, String numero, String documento, String ubicacion, String descripcion) throws EdificioException, UnidadException, PersonaException {
 		Edificio edificio = buscarEdificio(codigo);
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		Reclamo reclamo = new Reclamo(persona, edificio, ubicacion, descripcion, unidad);
+		reclamo.setNumero(reclamoDAO.agregarReclamo(reclamo.toEntity()));
+		reclamo.cambiarEstado(Estado.nuevo);
 		return reclamo.getNumero();
 	}
-	
+
+	// []
 	public void agregarImagenAReclamo(int numero, String direccion, String tipo) throws ReclamoException {
 		Reclamo reclamo = buscarReclamo(numero);
 		reclamo.agregarImagen(direccion, tipo);
 	}
-	
+
+	// [x]
 	public void cambiarEstado(int numero, Estado estado) throws ReclamoException {
 		Reclamo reclamo = buscarReclamo(numero);
 		reclamo.cambiarEstado(estado);
+		reclamoDAO.cambiarEstadoBD(numero, estado);
 	}
-	
+
+
+	// ------------------------------------------------------------------------
+
+
 	private Edificio buscarEdificio(int codigo) throws EdificioException {
 		Edificio edificio = edificioDAO.obtenerEdificioCodigo(codigo);
 		return edificio;
@@ -237,8 +253,8 @@ public class Controlador {
 		Persona persona = personaDAO.obtenerPersonaDocumento(documento);
 		return persona;
 	}
-	
-	private Reclamo buscarReclamo(int numero) throws ReclamoException {
-		return null;
+
+	public Reclamo buscarReclamo(int numero) throws ReclamoException {
+		return reclamoDAO.obtenerReclamoId(numero);
 	}
 }

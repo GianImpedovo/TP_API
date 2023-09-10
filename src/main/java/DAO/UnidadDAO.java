@@ -52,6 +52,19 @@ public class UnidadDAO {
         duenioDAO.agregarDuenio(persona, unidad);
     }
 
+    public void cambiarHabitado(UnidadEntity unidad){
+        unidadRespository.save(unidad);
+    }
+
+
+    public void agregarInquilino(UnidadEntity unidad, PersonaEntity persona){
+        inquilinoDAO.agregarInquilino(unidad, persona);
+    }
+
+    public void eliminarInquilinos(UnidadEntity unidad){
+        inquilinoDAO.eliminarInquilinosUnidad(unidad);
+    }
+
     public Unidad toNegocio(UnidadEntity unidad, Edificio edificio){
         //int id, String piso, String numero, boolean habitado,Edificio edificio
         Unidad u = new Unidad(unidad.getIdentificador(), unidad.getPiso(), unidad.getNumero(), unidad.getHabitado(), edificio);

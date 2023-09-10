@@ -1,6 +1,7 @@
 package entity;
 
 import jakarta.persistence.*;
+import vista.Estado;
 
 @Entity
 @Table(name = "reclamos")
@@ -12,39 +13,44 @@ public class ReclamoEntity {
 
     @ManyToOne
     @JoinColumn(name = "documento")
-    private PersonaEntity persona; // fk con personas
+    private PersonaEntity documento; // fk con personas
 
     @ManyToOne
     @JoinColumn(name = "codigo")
-    private EdificioEntity edificio; // fk con edificio
+    private EdificioEntity codigo; // fk con edificio
     private String ubicacion;
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "identificador")
-    private UnidadEntity unidad; // fk con unidad, no esta especificado en el diagrama sql
+    private int identificador; // identificamos la unidad, no es fk
+
+    @Column(name = "estado")
+    private Estado estado;
 
     public ReclamoEntity() {}
 
-    public ReclamoEntity(int idReclamo, PersonaEntity persona, EdificioEntity edificio, String ubicacion, String descripcion, UnidadEntity unidad) {
-        this.idReclamo = idReclamo;
-        this.persona = persona;
-        this.edificio = edificio;
+    public ReclamoEntity(PersonaEntity documento, EdificioEntity codigo, String ubicacion, String descripcion, int identificador) {
+        this.documento = documento;
+        this.codigo = codigo;
         this.ubicacion = ubicacion;
         this.descripcion = descripcion;
-        this.unidad = unidad;
+        this.identificador = identificador;
+        this.estado = Estado.nuevo;
     }
 
-    public int getIdReclamo() {
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public int getIdReclamo(){
         return idReclamo;
     }
 
-    public PersonaEntity getPersona() {
-        return persona;
+    public PersonaEntity getDocumento() {
+        return documento;
     }
 
-    public EdificioEntity getEdificio() {
-        return edificio;
+    public EdificioEntity getCodigo() {
+        return codigo;
     }
 
     public String getUbicacion() {
@@ -55,7 +61,11 @@ public class ReclamoEntity {
         return descripcion;
     }
 
-    public UnidadEntity getUnidad() {
-        return unidad;
+    public int getIdentificador() {
+        return identificador;
+    }
+
+    public Estado getEstado() {
+        return estado;
     }
 }

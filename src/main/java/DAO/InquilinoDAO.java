@@ -28,6 +28,21 @@ public class InquilinoDAO {
         return resultado;
     }
 
+    public void agregarInquilino(UnidadEntity unidad, PersonaEntity persona){
+        InquilinoEntity nuevo = new InquilinoEntity(unidad, persona);
+        inquilinoRepository.save(nuevo);
+    }
+
+    public void eliminarInquilino(InquilinoEntity i){
+        inquilinoRepository.delete(i);
+    }
+
+    public void eliminarInquilinosUnidad(UnidadEntity identificador){
+        List<InquilinoEntity> inquilinos = inquilinoRepository.findByIdentificador(identificador);
+        for (InquilinoEntity i: inquilinos)
+            eliminarInquilino(i);
+    }
+
     public Persona toNegocioPersona(PersonaEntity p){
         Persona persona = new Persona(p.getDocumento(), p.getNombre(), p.getMail(), p.getContrasenia());
         return persona;

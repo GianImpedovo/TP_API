@@ -3,11 +3,12 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.ReclamoEntity;
 import vista.Estado;
 
 public class Reclamo {
 
-	private int numero;
+	private int idReclamo;
 	private Persona usuario;
 	private Edificio edificio;
 	private String ubicacion;
@@ -15,14 +16,25 @@ public class Reclamo {
 	private Unidad unidad;
 	private Estado estado;
 	private List<Imagen> imagenes;
-	
+
 	public Reclamo(Persona usuario, Edificio edificio, String ubicacion, String descripcion, Unidad unidad) {
 		this.usuario = usuario;
 		this.edificio = edificio;
 		this.ubicacion = ubicacion;
 		this.descripcion = descripcion;
 		this.unidad = unidad;
-		this.estado = Estado.nuevo;
+		this.estado = null;
+		imagenes = new ArrayList<Imagen>();
+	}
+	
+	public Reclamo(int idReclamo, Persona usuario, Edificio edificio, String ubicacion, String descripcion, Unidad unidad) {
+		this.idReclamo = idReclamo;
+		this.usuario = usuario;
+		this.edificio = edificio;
+		this.ubicacion = ubicacion;
+		this.descripcion = descripcion;
+		this.unidad = unidad;
+		this.estado = null;
 		imagenes = new ArrayList<Imagen>();
 	}
 
@@ -32,11 +44,11 @@ public class Reclamo {
 	}
 	
 	public int getNumero() {
-		return numero;
+		return idReclamo;
 	}
 
 	public void setNumero(int numero) {
-		this.numero = numero;
+		this.idReclamo = numero;
 	}
 
 	public Persona getUsuario() {
@@ -69,6 +81,16 @@ public class Reclamo {
 	
 	public void cambiarEstado(Estado estado) {
 		this.estado = estado;
+	}
+
+	public ReclamoEntity toEntity(){
+		// PersonaEntity documento, EdificioEntity codigo, String ubicacion, String descripcion, int identificador
+		return new ReclamoEntity(this.usuario.toEntity(), this.edificio.toEntity(), this.ubicacion, this.descripcion, this.unidad.getId());
+	}
+
+
+	public String toString(){
+		return this.idReclamo + " " + this.descripcion + " " + this.estado;
 	}
 
 }

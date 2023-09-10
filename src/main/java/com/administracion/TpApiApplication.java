@@ -2,11 +2,7 @@ package com.administracion;
 
 import DAO.*;
 import controlador.Controlador;
-import entity.DuenioEntity;
-import entity.EdificioEntity;
-import entity.PersonaEntity;
-import entity.UnidadEntity;
-import modelo.Persona;
+import modelo.Reclamo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,15 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import vista.Estado;
 
-import modelo.Edificio;
-import vista.EdificioView;
-import vista.PersonaView;
-import vista.UnidadView;
+import javax.swing.plaf.IconUIResource;
 
-import java.util.ArrayList;
-import java.util.List;
-import modelo.Unidad;
 
 @SpringBootApplication
 @EntityScan("entity")
@@ -54,7 +45,7 @@ public class TpApiApplication implements CommandLineRunner{
 // 		"DNI555555555"
 
 // 		controlador.transferirUnidad(1, "70", "23", "DNI555555555");
-		controlador.agregarDuenioUnidad(1, "70", "23", "DNI44444444");
+// 		controlador.agregarDuenioUnidad(1, "70", "23", "DNI44444444");
 //		List<Persona> duenios = unidad.getDuenios();
 //		for (Persona d: duenios)
 //			System.out.println(d.toView().toString());
@@ -63,6 +54,13 @@ public class TpApiApplication implements CommandLineRunner{
 //		unidadDAO.agregarDuenio();
 
 //		controlador.eliminarPersona("DNI41200440");
+
+//		controlador.agregarInquilinoUnidad(1, "70", "23", "DNI30306216");
+
+		//controlador.liberarUnidad(1,  "70", "23");
+
+		//int numero = controlador.agregarReclamo(1, "70", "23", "DNI41200440", "asdfasdf", "No me anda el banio");
+		controlador.cambiarEstado(2, Estado.terminado);
 
 	}
 
