@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import vista.Estado;
 
 import javax.swing.plaf.IconUIResource;
+import java.util.List;
 
 
 @SpringBootApplication
@@ -60,7 +61,19 @@ public class TpApiApplication implements CommandLineRunner{
 		//controlador.liberarUnidad(1,  "70", "23");
 
 		//int numero = controlador.agregarReclamo(1, "70", "23", "DNI41200440", "asdfasdf", "No me anda el banio");
-		controlador.cambiarEstado(2, Estado.terminado);
+//		List<Reclamo> resultado = controlador.reclamosPorEdificio(1);
+//		for (Reclamo r: resultado)
+//			System.out.println(r.getNumero());
+
+	//	controlador.agregarReclamo(3, "10", "4", "DNI41200440", "asdf", "No anda la cafetera");
+
+		List<Reclamo> resultado = controlador.reclamosPorPersona("DNI41200440");
+		for (Reclamo r: resultado)
+			System.out.println(r.getNumero());
+
+//		System.out.println(controlador.reclamosPorNumero(5).getDescripcion());
+
+
 
 	}
 

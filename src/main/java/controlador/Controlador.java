@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import DAO.*;
+import entity.ReclamoEntity;
 import excepciones.EdificioException;
 import excepciones.PersonaException;
 import excepciones.ReclamoException;
@@ -186,24 +187,42 @@ public class Controlador {
 		Persona persona = buscarPersona(documento);
 		personaDAO.eliminarPersonaBD(persona.toEntity());
 	}
-	
-	public List<ReclamoView> reclamosPorEdificio(int codigo){
-		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
+
+
+	// Por ahora voy a usar reclamo negocio pero hay que cambiarlo al view
+	public List<Reclamo> reclamosPorEdificio(int codigo) throws EdificioException{
+		Edificio edificio = buscarEdificio(codigo);
+		List<Reclamo> resultado = reclamoDAO.obtenerReclamosEdificio(edificio.toEntity());
+//		List<Reclamo> resultado = new ArrayList<>();
+//		for (Reclamo r: reclamosEdificio)
+//			resultado.add()
 		return resultado;
 	}
-	
-	public List<ReclamoView> reclamosPorUnidad(int codigo, String piso, String numero) {
-		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
+
+	// Por ahora voy a usar reclamo negocio pero hay que cambiarlo al view
+	public List<Reclamo> reclamosPorUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException{
+		Unidad unidad = buscarUnidad(codigo, piso, numero);
+		List<Reclamo> resultado = reclamoDAO.obtenerReclamoUnidad(unidad.getId());
+//		List<Reclamo> resultado = new ArrayList<>();
+//		for (Reclamo r: reclamosEdificio)
+//			resultado.add()
 		return resultado;
 	}
-	
-	public ReclamoView reclamosPorNumero(int numero) {
-		ReclamoView resultado = null;
+
+	// Por ahora voy a usar reclamo negocio pero hay que cambiarlo al view
+	public Reclamo reclamosPorNumero(int numero) {
+		Reclamo resultado = reclamoDAO.obtenerReclamoId(numero);
+		//ReclamoView resultado = null;
 		return resultado;
 	}
-	
-	public List<ReclamoView> reclamosPorPersona(String documento) {
-		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
+
+	// Por ahora voy a usar reclamo negocio pero hay que cambiarlo al view
+	public List<Reclamo> reclamosPorPersona(String documento) throws PersonaException{
+		Persona persona = buscarPersona(documento);
+		List<Reclamo> resultado = reclamoDAO.obtenerReclamoDocumento(persona.toEntity());
+//		List<Reclamo> resultado = new ArrayList<>();
+//		for (Reclamo r: reclamosEdificio)
+//			resultado.add()
 		return resultado;
 	}
 
@@ -232,15 +251,14 @@ public class Controlador {
 	}
 
 
-	// ------------------------------------------------------------------------
-
+	// ----------------------------------------------------------------------
 
 	private Edificio buscarEdificio(int codigo) throws EdificioException {
 		Edificio edificio = edificioDAO.obtenerEdificioCodigo(codigo);
 		return edificio;
 	}
 
-	public Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException{
+	private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException{
 		Edificio edificio = buscarEdificio(codigo);
 		Unidad resultado = null;
 		for (Unidad u: edificio.getUnidades())
@@ -248,13 +266,13 @@ public class Controlador {
 				resultado = u;
 		return resultado;
 	}
-	
-	public Persona buscarPersona(String documento) throws PersonaException {
+
+	private Persona buscarPersona(String documento) throws PersonaException {
 		Persona persona = personaDAO.obtenerPersonaDocumento(documento);
 		return persona;
 	}
 
-	public Reclamo buscarReclamo(int numero) throws ReclamoException {
+	private Reclamo buscarReclamo(int numero) throws ReclamoException {
 		return reclamoDAO.obtenerReclamoId(numero);
 	}
 }

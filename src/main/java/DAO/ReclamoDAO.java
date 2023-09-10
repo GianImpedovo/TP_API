@@ -1,6 +1,9 @@
 package DAO;
 
+import entity.EdificioEntity;
+import entity.PersonaEntity;
 import entity.ReclamoEntity;
+import entity.UnidadEntity;
 import modelo.Persona;
 import modelo.Unidad;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import modelo.Reclamo;
 import modelo.Edificio;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import vista.Estado;
 @Repository
@@ -58,6 +63,30 @@ public class ReclamoDAO {
             return toNegocio(obtenido.get());
         }
         return null;
+    }
+
+    public List<Reclamo> obtenerReclamosEdificio(EdificioEntity edificio){
+        List<ReclamoEntity> reclamosEntity = reclamoRepository.findByCodigo(edificio);
+        List<Reclamo> reclamosNegocio = new ArrayList<>();
+        for (ReclamoEntity r: reclamosEntity)
+            reclamosNegocio.add(toNegocio(r));
+        return reclamosNegocio;
+    }
+
+    public List<Reclamo> obtenerReclamoUnidad(int identificador){
+        List<ReclamoEntity> reclamosEntity = reclamoRepository.findByIdentificador(identificador);
+        List<Reclamo> reclamosNegocio = new ArrayList<>();
+        for (ReclamoEntity r: reclamosEntity)
+            reclamosNegocio.add(toNegocio(r));
+        return reclamosNegocio;
+    }
+
+    public List<Reclamo> obtenerReclamoDocumento(PersonaEntity documento){
+        List<ReclamoEntity> reclamosEntity = reclamoRepository.findByDocumento(documento);
+        List<Reclamo> reclamosNegocio = new ArrayList<>();
+        for (ReclamoEntity r: reclamosEntity)
+            reclamosNegocio.add(toNegocio(r));
+        return reclamosNegocio;
     }
 
     public Reclamo toNegocio(ReclamoEntity reclamo){

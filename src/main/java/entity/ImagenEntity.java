@@ -18,8 +18,7 @@ public class ImagenEntity {
 
     public ImagenEntity() {}
 
-    public ImagenEntity(int numero, String path, String tipo, ReclamoEntity reclamo) {
-        this.numero = numero;
+    public ImagenEntity(String path, String tipo, ReclamoEntity reclamo) {
         this.path = path;
         this.tipo = tipo;
         this.reclamo = reclamo;
