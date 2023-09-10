@@ -12,5 +12,6 @@ import java.util.Optional;
 
 public interface DuenioRepository extends JpaRepository<DuenioEntity, Integer> {
     List<DuenioEntity> findByIdentificador(UnidadEntity unidad);
+    Optional<DuenioEntity> findByDocumento(PersonaEntity persona);
 
 }

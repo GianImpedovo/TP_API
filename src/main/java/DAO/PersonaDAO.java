@@ -18,4 +18,24 @@ public class PersonaDAO{
 
     public PersonaDAO(){}
 
+    public Persona obtenerPersonaDocumento(String documento){
+        Optional<PersonaEntity> resultado = personaRepository.findByDocumento(documento);
+        if (resultado.isPresent())
+            return toNegocio(resultado.get());
+        return null;
+    }
+
+    public void agregarPersonaBD(PersonaEntity persona){
+        personaRepository.save(persona);
+    }
+
+    public void eliminarPersonaBD(PersonaEntity persona){
+        personaRepository.delete(persona);
+    }
+
+    public Persona toNegocio(PersonaEntity persona){
+        Persona nueva = new Persona(persona.getDocumento(),persona.getNombre(),persona.getMail(), persona.getContrasenia());
+        return nueva;
+    }
+
 }

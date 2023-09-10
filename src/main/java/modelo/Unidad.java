@@ -114,7 +114,7 @@ public class Unidad {
 
 	public UnidadEntity toEntity(){
 		//int identificador, String piso, String numero, char habitado, EdificioEntity edificio
-		return new UnidadEntity(id, piso, numero, this.getHabitado(), edificio.toEntity());
+		return new UnidadEntity( id, piso, numero, this.getHabitado(), edificio.toEntity() );
 	}
 
 	public void setInquilinos(List<Persona> inquilinos){

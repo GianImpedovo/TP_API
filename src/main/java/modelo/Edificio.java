@@ -103,9 +103,6 @@ public class Edificio {
 	}
 
 	public EdificioEntity toEntity(){
-		List<UnidadEntity> unidadesEntity = new ArrayList<>();
-		for(Unidad u: unidades)
-			unidadesEntity.add(u.toEntity());
-		return new EdificioEntity(this.codigo, this.nombre, this.direccion, unidadesEntity);
+		return new EdificioEntity(this.codigo, this.nombre, this.direccion);
 	}
 }

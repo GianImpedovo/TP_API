@@ -20,14 +20,12 @@ public class EdificioEntity {
 	@OneToMany(mappedBy = "edificio", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<UnidadEntity> unidades;
 
-	public EdificioEntity() {
-	}
+	public EdificioEntity() {}
 
-	public EdificioEntity(int codigo, String nombre, String direccion, List<UnidadEntity> unidades) {
+	public EdificioEntity(int codigo, String nombre, String direccion) {
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.direccion = direccion;
-		this.unidades = unidades;
 	}
 
 	public int getCodigo() {

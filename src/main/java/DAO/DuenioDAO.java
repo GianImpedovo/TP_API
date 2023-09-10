@@ -11,7 +11,7 @@ import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import modelo.Unidad;
 
 @Repository
 public class DuenioDAO {
@@ -27,7 +27,6 @@ public class DuenioDAO {
             return toNegocioPersona(de.get().getDocumento());
         }
         return null;
-
     }
 
     public List<Persona> obtenerPorUnidad(UnidadEntity unidad){
@@ -36,6 +35,24 @@ public class DuenioDAO {
         for (DuenioEntity p: personas)
             resultado.add(toNegocioPersona(p.getDocumento()));
         return resultado;
+    }
+
+    public DuenioEntity obtenerPorDocumento(PersonaEntity persona){
+        Optional<DuenioEntity> duenioObtenido = duenioRepository.findByDocumento(persona);
+        if (duenioObtenido.isPresent())
+            return duenioObtenido.get();
+        return null;
+    }
+
+    public void eliminarDuenio(PersonaEntity d){
+        DuenioEntity duenio = obtenerPorDocumento(d);
+        duenioRepository.delete(duenio);
+    }
+
+    public void agregarDuenio(PersonaEntity persona, UnidadEntity unidad){
+        DuenioEntity duenio = new DuenioEntity(unidad, persona);
+        duenioRepository.save(duenio);
+        System.out.println("Duenio agregado: " + duenio.getDocumento().getDocumento());
     }
 
     public Persona toNegocioPersona(PersonaEntity p){

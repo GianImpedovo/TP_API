@@ -32,6 +32,25 @@ public class UnidadDAO {
 //        System.out.println("Se inyecta unidadRespository: " + (unidadRespository != null));
 //    }
 
+    public UnidadEntity obtenerUnidadPorIdentificador(int identificador){
+        Optional<UnidadEntity> unidad = unidadRespository.findByIdentificador(identificador);
+        if (unidad.isPresent())
+            return unidad.get();
+        return null;
+    }
+
+    public void eliminarDuenios(Unidad unidad){
+        UnidadEntity u = obtenerUnidadPorIdentificador(unidad.getId());
+        List<Persona> duenios = duenioDAO.obtenerPorUnidad(u);
+        for (Persona d: duenios){
+            duenioDAO.eliminarDuenio(d.toEntity());
+            System.out.println(d.toView().toString() + " - SE ELIMINO");
+        }
+    }
+
+    public void agregarDuenioUnidad(PersonaEntity persona, UnidadEntity unidad){
+        duenioDAO.agregarDuenio(persona, unidad);
+    }
 
     public Unidad toNegocio(UnidadEntity unidad, Edificio edificio){
         //int id, String piso, String numero, boolean habitado,Edificio edificio

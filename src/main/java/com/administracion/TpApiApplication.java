@@ -33,6 +33,8 @@ public class TpApiApplication implements CommandLineRunner{
 	@Autowired
 	Controlador controlador;
 
+	@Autowired
+	UnidadDAO unidadDAO;
 	public static void main(String[] args) {
 		SpringApplication.run(TpApiApplication.class, args);
 	}
@@ -44,12 +46,23 @@ public class TpApiApplication implements CommandLineRunner{
 //		for (EdificioView e: edificios)
 //			System.out.println(e.toString());
 
-		List<PersonaView> unidadesView = controlador.dueniosPorUnidad(1, "70", "23");
-		//System.out.println(unidadesView.size());
-		for (PersonaView u: unidadesView)
-			System.out.println(u.toString());
+//		List<PersonaView> unidadesView = controlador.dueniosPorUnidad(1, "70", "23");
+//		//System.out.println(unidadesView.size());
+//		for (PersonaView u: unidadesView)
+//			System.out.println(u.toString());
+//
+// 		"DNI555555555"
 
+// 		controlador.transferirUnidad(1, "70", "23", "DNI555555555");
+		controlador.agregarDuenioUnidad(1, "70", "23", "DNI44444444");
+//		List<Persona> duenios = unidad.getDuenios();
+//		for (Persona d: duenios)
+//			System.out.println(d.toView().toString());
+//		unidadDAO.eliminarDuenios(unidad);
+//		Persona persona = controlador.buscarPersona("DNI555555555");
+//		unidadDAO.agregarDuenio();
 
+//		controlador.eliminarPersona("DNI41200440");
 
 	}
 
