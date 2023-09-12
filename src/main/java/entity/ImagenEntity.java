@@ -12,16 +12,16 @@ public class ImagenEntity {
     private String path;
     private String tipo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idReclamo")
-    private ReclamoEntity reclamo;
+    private ReclamoEntity idReclamo;
 
     public ImagenEntity() {}
 
-    public ImagenEntity(String path, String tipo, ReclamoEntity reclamo) {
+    public ImagenEntity(String path, String tipo, ReclamoEntity idReclamo) {
         this.path = path;
         this.tipo = tipo;
-        this.reclamo = reclamo;
+        this.idReclamo = idReclamo;
     }
 
     public int getNumero() {
@@ -37,7 +37,7 @@ public class ImagenEntity {
     }
 
     public ReclamoEntity getIdReclamo() {
-        return reclamo;
+        return idReclamo;
     }
 
 }

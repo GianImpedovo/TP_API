@@ -1,5 +1,7 @@
 package modelo;
 
+import entity.ImagenEntity;
+
 public class Imagen {
 
 	private int numero;
@@ -33,5 +35,9 @@ public class Imagen {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public ImagenEntity toEntity(Reclamo reclamo){
+		return new ImagenEntity(this.direccion, this.tipo, reclamo.toEntity());
 	}
 }

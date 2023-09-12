@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import vista.Estado;
+import vista.*;
 
 import javax.swing.plaf.IconUIResource;
 import java.util.List;
@@ -60,18 +60,24 @@ public class TpApiApplication implements CommandLineRunner{
 
 		//controlador.liberarUnidad(1,  "70", "23");
 
-		//int numero = controlador.agregarReclamo(1, "70", "23", "DNI41200440", "asdfasdf", "No me anda el banio");
+//		int numero = controlador.agregarReclamo(1, "9", "5", "CI 13230978", "asdfasdf", "No me anda el agregarimagen");
 //		List<Reclamo> resultado = controlador.reclamosPorEdificio(1);
 //		for (Reclamo r: resultado)
 //			System.out.println(r.getNumero());
 
+//		controlador.agregarImagenAReclamo(4, "ddddddddd", "jpg");
+
+
 	//	controlador.agregarReclamo(3, "10", "4", "DNI41200440", "asdf", "No anda la cafetera");
 
-		List<Reclamo> resultado = controlador.reclamosPorPersona("DNI41200440");
-		for (Reclamo r: resultado)
-			System.out.println(r.getNumero());
+//		List<Reclamo> resultado = controlador.reclamosPorPersona("DNI41200440");
+//		for (Reclamo r: resultado)
+//			System.out.println(r.getNumero());
 
+//		controlador.agregarPersona("DNI11111111", "TINA, TIAN");
 //		System.out.println(controlador.reclamosPorNumero(5).getDescripcion());
+//		controlador.agregarDuenioUnidad(1, "10", "6", "DNI11111111");
+//		controlador.eliminarPersona("DNI11111111");
 
 
 

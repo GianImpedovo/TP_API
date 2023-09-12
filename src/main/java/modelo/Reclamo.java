@@ -42,6 +42,15 @@ public class Reclamo {
 		Imagen imagen = new Imagen(direccion, tipo);
 		imagenes.add(imagen);
 	}
+
+	public Imagen buscarImagen(String direccion){
+		for(Imagen i : imagenes){
+			if(i.getDireccion().equals(direccion)){
+				return i;
+			}
+		}
+		return null;
+	}
 	
 	public int getNumero() {
 		return idReclamo;

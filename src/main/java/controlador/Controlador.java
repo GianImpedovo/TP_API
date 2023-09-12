@@ -11,10 +11,7 @@ import excepciones.PersonaException;
 import excepciones.ReclamoException;
 import excepciones.UnidadException;
 import jakarta.persistence.Column;
-import modelo.Edificio;
-import modelo.Persona;
-import modelo.Reclamo;
-import modelo.Unidad;
+import modelo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,6 +40,9 @@ public class Controlador {
 
 	@Autowired
 	ReclamoDAO reclamoDAO;
+
+	@Autowired
+	ImagenDAO imagenDAO;
 
 //	private static Controlador instancia;
 //
@@ -237,9 +237,14 @@ public class Controlador {
 		return reclamo.getNumero();
 	}
 
-	// []
+	// [XXXXXXXXXXXXXXXXXXXXXXX]
 	public void agregarImagenAReclamo(int numero, String direccion, String tipo) throws ReclamoException {
 		Reclamo reclamo = buscarReclamo(numero);
+//		reclamo.agregarImagen(direccion, tipo);
+//		Imagen i = reclamo.buscarImagen(direccion);
+//		imagenDAO.agregarImagen(i.toEntity(reclamo));
+		ReclamoEntity re = reclamoDAO.obtenerReclamoEntityId(numero);
+		imagenDAO.agregarImagen(re, direccion, tipo);
 		reclamo.agregarImagen(direccion, tipo);
 	}
 
