@@ -64,6 +64,7 @@ public class Controlador {
 	}
 
 	// [x]
+	//HOLA 
 	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
 		List<UnidadView> resultado = new ArrayList<UnidadView>();
 		Edificio edificio = buscarEdificio(codigo);
