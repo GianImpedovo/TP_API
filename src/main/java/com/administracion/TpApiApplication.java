@@ -45,7 +45,7 @@ public class TpApiApplication implements CommandLineRunner{
 //
 // 		"DNI555555555"
 
-// 		controlador.transferirUnidad(1, "70", "23", "DNI555555555");
+		controlador.transferirUnidad(1, "10", "6", "DNI29988738");
 // 		controlador.agregarDuenioUnidad(1, "70", "23", "DNI44444444");
 //		List<Persona> duenios = unidad.getDuenios();
 //		for (Persona d: duenios)

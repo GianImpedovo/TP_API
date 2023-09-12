@@ -93,7 +93,7 @@ public class ReclamoDAO {
         //Persona usuario, Edificio edificio, String ubicacion, String descripcion, Unidad unidad
         Edificio e = edificioDAO.toNegocio(reclamo.getCodigo());
         Persona p = personaDAO.toNegocio(reclamo.getDocumento());
-        Unidad u = unidadDAO.toNegocio(unidadDAO.obtenerUnidadPorIdentificador(reclamo.getIdentificador()), e);
+        Unidad u = unidadDAO.toNegocio(unidadDAO.obtenerUnidadPorIdentificador(reclamo.getIdentificador()));
         Reclamo r = new Reclamo(reclamo.getIdReclamo(), p, e, reclamo.getUbicacion(), reclamo.getDescripcion(), u);
         r.cambiarEstado(reclamo.getEstado());
         return r;

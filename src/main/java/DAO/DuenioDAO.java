@@ -37,6 +37,8 @@ public class DuenioDAO {
         return resultado;
     }
 
+
+    // Esto esta mal porque me puede retornar un duenio de muchas unidades
     public DuenioEntity obtenerPorDocumento(PersonaEntity persona){
         Optional<DuenioEntity> duenioObtenido = duenioRepository.findByDocumento(persona);
         if (duenioObtenido.isPresent())
@@ -44,9 +46,12 @@ public class DuenioDAO {
         return null;
     }
 
-    public void eliminarDuenio(PersonaEntity d){
-        DuenioEntity duenio = obtenerPorDocumento(d);
-        duenioRepository.delete(duenio);
+
+    public void eliminarDuenio(PersonaEntity duenioEliminar, UnidadEntity unidad){
+        List<DuenioEntity> duenios = duenioRepository.findByIdentificador(unidad);
+        for (DuenioEntity d: duenios)
+            if (d.getDocumento().getDocumento().equals(duenioEliminar.getDocumento()))
+                duenioRepository.delete(d);
     }
 
     public void agregarDuenio(PersonaEntity persona, UnidadEntity unidad){

@@ -45,9 +45,12 @@ public class EdificioDAO {
     public Edificio toNegocio(EdificioEntity ee){
         Edificio edificio = new Edificio(ee.getCodigo(), ee.getNombre(), ee.getDireccion());
         List<Unidad> unidades = new ArrayList<>();
-        for (UnidadEntity ue: ee.getUnidades())
-            unidades.add(unidadDAO.toNegocio(ue, edificio));
+        for (UnidadEntity ue: ee.getUnidades()){
+            unidades.add(unidadDAO.toNegocio(ue));
+        }
         edificio.setUnidades(unidades);
+        for (Unidad u: edificio.getUnidades())
+            u.setEdificio(edificio);
         return edificio;
     }
 }

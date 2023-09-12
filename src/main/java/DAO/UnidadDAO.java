@@ -43,7 +43,7 @@ public class UnidadDAO {
         UnidadEntity u = obtenerUnidadPorIdentificador(unidad.getId());
         List<Persona> duenios = duenioDAO.obtenerPorUnidad(u);
         for (Persona d: duenios){
-            duenioDAO.eliminarDuenio(d.toEntity());
+            duenioDAO.eliminarDuenio(d.toEntity(), u);
             System.out.println(d.toView().toString() + " - SE ELIMINO");
         }
     }
@@ -65,9 +65,9 @@ public class UnidadDAO {
         inquilinoDAO.eliminarInquilinosUnidad(unidad);
     }
 
-    public Unidad toNegocio(UnidadEntity unidad, Edificio edificio){
-        //int id, String piso, String numero, boolean habitado,Edificio edificio
-        Unidad u = new Unidad(unidad.getIdentificador(), unidad.getPiso(), unidad.getNumero(), unidad.getHabitado(), edificio);
+    public Unidad toNegocio(UnidadEntity unidad){
+        //int id, String piso, String numero, boolean habitado
+        Unidad u = new Unidad(unidad.getIdentificador(), unidad.getPiso(), unidad.getNumero(), unidad.getHabitado());
         List<Persona> duenios = duenioDAO.obtenerPorUnidad(unidad);
         List<Persona> inquilinos = inquilinoDAO.obtenerPorUnidad(unidad);
         u.setDuenios(duenios);
