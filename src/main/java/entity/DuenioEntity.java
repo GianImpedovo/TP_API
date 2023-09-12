@@ -16,8 +16,7 @@ public class DuenioEntity {
     @JoinColumn(name = "identificador")
     private UnidadEntity identificador; // fk con unidad
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
     @JoinColumn(name = "documento")
     private PersonaEntity documento; // fk con persona
 

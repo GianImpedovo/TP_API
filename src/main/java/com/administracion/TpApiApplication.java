@@ -74,13 +74,16 @@ public class TpApiApplication implements CommandLineRunner{
 //		for (Reclamo r: resultado)
 //			System.out.println(r.getNumero());
 
-//		controlador.agregarPersona("DNI11111111", "TINA, TIAN");
+//		controlador.agregarPersona("DNI39076419", "LUCIA, CASTRO");
 //		System.out.println(controlador.reclamosPorNumero(5).getDescripcion());
-//		controlador.agregarDuenioUnidad(1, "10", "6", "DNI11111111");
+//		controlador.agregarDuenioUnidad(1, "10", "6", "DNI39076419");
 //		controlador.eliminarPersona("DNI11111111");
 
+//		controlador.transferirUnidad(1, "10", "6", "DNI30012288");
 
-
+//		List<PersonaView> duenios = controlador.dueniosPorUnidad(1, "10", "6");
+//		for(PersonaView d: duenios)
+//			System.out.println(d.toString());
 	}
 
 }

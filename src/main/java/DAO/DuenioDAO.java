@@ -1,6 +1,7 @@
 package DAO;
 
 import entity.DuenioEntity;
+import entity.InquilinoEntity;
 import entity.PersonaEntity;
 import entity.UnidadEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class DuenioDAO {
         return resultado;
     }
 
+    public List<DuenioEntity> obtenerPorUnidadDuenios(UnidadEntity unidad){
+        List<DuenioEntity> personas = duenioRepository.findByIdentificador(unidad);
+        return personas;
+    }
+
     public DuenioEntity obtenerPorDocumento(PersonaEntity persona){
         Optional<DuenioEntity> duenioObtenido = duenioRepository.findByDocumento(persona);
         if (duenioObtenido.isPresent())
@@ -44,9 +50,15 @@ public class DuenioDAO {
         return null;
     }
 
-    public void eliminarDuenio(PersonaEntity d){
-        DuenioEntity duenio = obtenerPorDocumento(d);
-        duenioRepository.delete(duenio);
+    public void eliminarDueniosUnidad(UnidadEntity u){
+        List<DuenioEntity> inquilinos = duenioRepository.findByIdentificador(u);
+        for (DuenioEntity d: inquilinos)
+            eliminarDuenio(d);
+
+    }
+
+    public void eliminarDuenio(DuenioEntity d) {
+        duenioRepository.delete(d);
     }
 
     public void agregarDuenio(PersonaEntity persona, UnidadEntity unidad){

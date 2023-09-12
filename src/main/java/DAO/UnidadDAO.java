@@ -39,13 +39,8 @@ public class UnidadDAO {
         return null;
     }
 
-    public void eliminarDuenios(Unidad unidad){
-        UnidadEntity u = obtenerUnidadPorIdentificador(unidad.getId());
-        List<Persona> duenios = duenioDAO.obtenerPorUnidad(u);
-        for (Persona d: duenios){
-            duenioDAO.eliminarDuenio(d.toEntity());
-            System.out.println(d.toView().toString() + " - SE ELIMINO");
-        }
+    public void eliminarDuenios(UnidadEntity unidad){
+        duenioDAO.eliminarDueniosUnidad(unidad);
     }
 
     public void agregarDuenioUnidad(PersonaEntity persona, UnidadEntity unidad){

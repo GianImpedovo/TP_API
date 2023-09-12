@@ -131,7 +131,8 @@ public class Controlador {
 		unidad.setEdificio(edificio);
 
 		// Elimino de la BD
-		unidadDAO.eliminarDuenios(unidad);
+
+		unidadDAO.eliminarDuenios(unidad.toEntity());
 		Persona persona = buscarPersona(documento);
 
 		// Agregamos duenio con su unidad

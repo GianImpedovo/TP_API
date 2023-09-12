@@ -17,7 +17,7 @@ public class UnidadEntity {
     private char habitado;
 
     @ManyToOne
-    @JoinColumn(name = "codigoEdificio")
+    @JoinColumn(name = "codigoedificio")
     private EdificioEntity edificio; // fk con edificio
 
     public UnidadEntity() {}
