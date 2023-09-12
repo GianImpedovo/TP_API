@@ -84,10 +84,11 @@ public class Edificio {
 		for(Unidad unidad : unidades) {
 			if(unidad.estaHabitado()) {
 				List<Persona> inquilinos = unidad.getInquilinos();
-
 				if(inquilinos.size() > 0) 
-					for(Persona p : inquilinos)
+					for(Persona p : inquilinos) {
 						resultado.add(p);
+					}
+
 				else {
 					List<Persona> duenios = unidad.getDuenios();
 					for(Persona p : duenios)

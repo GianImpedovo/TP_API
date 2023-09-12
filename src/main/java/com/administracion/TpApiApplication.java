@@ -2,6 +2,7 @@ package com.administracion;
 
 import DAO.*;
 import controlador.Controlador;
+import modelo.Persona;
 import modelo.Reclamo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,6 +15,7 @@ import vista.*;
 
 import javax.swing.plaf.IconUIResource;
 import java.util.List;
+import java.util.Scanner;
 
 
 @SpringBootApplication
@@ -27,6 +29,8 @@ public class TpApiApplication implements CommandLineRunner{
 
 	@Autowired
 	UnidadDAO unidadDAO;
+
+	Scanner entradaEscaner = new Scanner(System.in);
 	public static void main(String[] args) {
 		SpringApplication.run(TpApiApplication.class, args);
 	}
@@ -34,60 +38,113 @@ public class TpApiApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-//		List<EdificioView> edificios = controlador.getEdificios();
-//		for (EdificioView e: edificios)
-//			System.out.println(e.toString());
+		// Traer todos los eficicios
+		/*System.out.println("-----  TRAER TODOS LOS EDIFICIOS -----");
+		List<EdificioView> edificios = controlador.getEdificios();
+		for (EdificioView e: edificios)
+			System.out.println(e.toString());
 
-//		List<PersonaView> unidadesView = controlador.dueniosPorUnidad(1, "70", "23");
-//		//System.out.println(unidadesView.size());
-//		for (PersonaView u: unidadesView)
-//			System.out.println(u.toString());
-//
-// 		"DNI555555555"
+		entradaEscaner.nextLine ();*/
 
-		controlador.transferirUnidad(1, "10", "6", "DNI29988738");
-// 		controlador.agregarDuenioUnidad(1, "70", "23", "DNI44444444");
-//		List<Persona> duenios = unidad.getDuenios();
-//		for (Persona d: duenios)
-//			System.out.println(d.toView().toString());
-//		unidadDAO.eliminarDuenios(unidad);
-//		Persona persona = controlador.buscarPersona("DNI555555555");
-//		unidadDAO.agregarDuenio();
+		// Traer unidades por edificio
+		/*System.out.println("-----  TRAER TODAS LAS UNIDADES POR EDIFICIO -----");
+		List<UnidadView> unidades = controlador.getUnidadesPorEdificio(1);
+		for(UnidadView u: unidades)
+			System.out.println(u.toString());
 
-//		controlador.eliminarPersona("DNI41200440");
+		entradaEscaner.nextLine();*/
 
-//		controlador.agregarInquilinoUnidad(1, "70", "23", "DNI30306216");
+		// Traer habilitados por edificio
+		/*System.out.println("-----  TRAER LOS HABILITADOS POR EDIFICIO -----");
+		List<PersonaView> habilitados = controlador.habilitadosPorEdificio(1);
+		for (PersonaView p: habilitados)
+			System.out.println(p.toString());
 
-		//controlador.liberarUnidad(1,  "70", "23");
+		entradaEscaner.nextLine();*/
 
-//		int numero = controlador.agregarReclamo(1, "9", "5", "CI 13230978", "asdfasdf", "No me anda el agregarimagen");
-//		List<Reclamo> resultado = controlador.reclamosPorEdificio(1);
-//		for (Reclamo r: resultado)
-//			System.out.println(r.getNumero());
-
-//		controlador.agregarImagenAReclamo(4, "ddddddddd", "jpg");
-
-
-	//	controlador.agregarReclamo(3, "10", "4", "DNI41200440", "asdf", "No anda la cafetera");
-
-//		List<Reclamo> resultado = controlador.reclamosPorPersona("DNI41200440");
-//		for (Reclamo r: resultado)
-//			System.out.println(r.getNumero());
-
-//		controlador.agregarPersona("DNI39076419", "LUCIA, CASTRO");
-//		System.out.println(controlador.reclamosPorNumero(5).getDescripcion());
-//		controlador.agregarDuenioUnidad(1, "10", "6", "DNI39076419");
-//		controlador.eliminarPersona("DNI11111111");
-
-		List<PersonaView> duenios = controlador.dueniosPorUnidad(1, "10", "6");
-		for(PersonaView d: duenios)
+		// Traer duenios por edificio
+		/*System.out.println("-----  TRAER TODOS LOS DUENIOS POR EDIFICIO -----");
+		List<PersonaView> duenios = controlador.dueniosPorEdificio(1);
+		for (PersonaView d: duenios)
 			System.out.println(d.toString());
 
-		controlador.transferirUnidad(1, "10", "6", "DNI39076419");
+		entradaEscaner.nextLine();*/
 
-		duenios = controlador.dueniosPorUnidad(1, "10", "6");
-		for(PersonaView d: duenios)
-			System.out.println(d.toString());
+		// Traer habitantes por edificio
+		/*System.out.println("-----  TRAER TODOS LOS HABITANTES POR EDIFICIO -----");
+		List<PersonaView> habitantes = controlador.habitantesPorEdificio(1);
+		for(PersonaView h: habitantes)
+			System.out.println(h.toString());
+
+		entradaEscaner.nextLine();*/
+
+		// Traer duenios por unidad
+		/*System.out.println("-----  TRAER TODOS LOS DUENIOS POR UNIDAD -----");
+		List<PersonaView> duenios = controlador.dueniosPorUnidad(1, "10", "5");
+		for(PersonaView h: duenios)
+			System.out.println(h.toString());
+
+		entradaEscaner.nextLine();*/
+
+		// Traer inquilinos por unidad
+		/*System.out.println("-----  TRAER TODOS LOS INQUILINOS POR UNIDAD -----");
+		List<PersonaView> inquilinos = controlador.inquilinosPorUnidad(1, "9", "2");
+		for (PersonaView i: inquilinos)
+			System.out.println(i.toString());
+
+		entradaEscaner.nextLine();*/
+
+		// Transferir unidad   CPA3449614
+		/*System.out.println("-----  TRANSFERIR UNIDAD -----");
+		System.out.println("-> Duenio actual:");
+		List<PersonaView> duenios = controlador.dueniosPorUnidad(1, "10", "5");
+		for(PersonaView h: duenios)
+			System.out.println(h.toString());
+
+		controlador.transferirUnidad(1, "10", "5", "CPA3449614");
+
+		System.out.println("-> Duenio nuevo:");
+		duenios = controlador.dueniosPorUnidad(1, "10", "5");
+		for(PersonaView h: duenios)
+			System.out.println(h.toString());
+
+		entradaEscaner.nextLine();*/
+
+		// Agregar duenio a unidad
+		/*System.out.println("-----  AGREGAR DUEÑO A UNIDAD -----");
+		controlador.agregarDuenioUnidad(1, "10", "5", "DNI29988738");
+		List<PersonaView> duenios = controlador.dueniosPorUnidad(1, "10", "5");
+		for(PersonaView h: duenios)
+			System.out.println(h.toString());
+
+		entradaEscaner.nextLine();*/
+
+		// Alquilar unidad
+		/*System.out.println("-----  ALQUILAR UNIDAD -----");
+		controlador.alquilarUnidad(1, "10", "6", "DNI29988738");
+		List<PersonaView> inquilinos = controlador.inquilinosPorUnidad(1, "10", "6");
+		for (PersonaView i: inquilinos)
+			System.out.println(i.toString());
+
+		entradaEscaner.nextLine();*/
+
+		// Agregar inquilino a unidad
+		/*System.out.println("-----  AGREGAR INQUILINO A UNIDAD -----");
+		System.out.println("-> Inquilinos antes:");
+		List<PersonaView> inquilinos = controlador.inquilinosPorUnidad(1, "9", "5");
+		for (PersonaView i: inquilinos)
+			System.out.println(i.toString());
+
+		controlador.agregarInquilinoUnidad(1, "9", "5", "DNI39076419");
+
+		System.out.println("-> Inquilinos despues:");
+		inquilinos = controlador.inquilinosPorUnidad(1, "9", "5");
+		for (PersonaView i: inquilinos)
+			System.out.println(i.toString());*/
+
+		// Librar unidad
+		System.out.println("-----  LIBERAR UNA UNIDAD -----");
+
 	}
 
 }
