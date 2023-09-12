@@ -42,7 +42,6 @@ public class DuenioDAO {
         List<DuenioEntity> personas = duenioRepository.findByIdentificador(unidad);
         return personas;
     }
-
     public DuenioEntity obtenerPorDocumento(PersonaEntity persona){
         Optional<DuenioEntity> duenioObtenido = duenioRepository.findByDocumento(persona);
         if (duenioObtenido.isPresent())
