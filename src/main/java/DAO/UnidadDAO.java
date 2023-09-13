@@ -57,6 +57,8 @@ public class UnidadDAO {
     }
 
     public void eliminarInquilinos(UnidadEntity unidad){
+        UnidadEntity nueva = new UnidadEntity(unidad.getIdentificador(), unidad.getPiso(), unidad.getNumero(), 'N', unidad.getEdificio());
+        unidadRespository.save(nueva);
         inquilinoDAO.eliminarInquilinosUnidad(unidad);
     }
 

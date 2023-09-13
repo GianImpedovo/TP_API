@@ -9,6 +9,7 @@ public class ReclamoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idreclamo")
     private int idReclamo;
 
     @ManyToOne

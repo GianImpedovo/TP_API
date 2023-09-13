@@ -14,4 +14,6 @@ public class ReclamoView {
 	private List<ImagenView> imagenes;
 	
 	//Completar aplicando el patron dto
+
+
 }

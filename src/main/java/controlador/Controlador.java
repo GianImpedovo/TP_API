@@ -2,9 +2,11 @@ package controlador;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import DAO.*;
+import entity.InquilinoEntity;
 import entity.ReclamoEntity;
 import excepciones.EdificioException;
 import excepciones.PersonaException;
@@ -43,6 +45,9 @@ public class Controlador {
 
 	@Autowired
 	ImagenDAO imagenDAO;
+
+	@Autowired
+	InquilinoDAO inquilinoDAO;
 
 //	private static Controlador instancia;
 //
@@ -172,10 +177,11 @@ public class Controlador {
 		unidadDAO.eliminarInquilinos(unidad.toEntity());
 	}
 
-	//[]
+	//[x]
 	public void habitarUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		unidad.habitar();;
+		unidadDAO.cambiarHabitado(unidad.toEntity());
 	}
 
 	// [x]
@@ -187,6 +193,12 @@ public class Controlador {
 	// [x]
 	public void eliminarPersona(String documento) throws PersonaException {
 		Persona persona = buscarPersona(documento);
+
+		/*
+		ELIMINAR PERSONA --> TRANSFERIMOS UNA UNIDAD Y EL DUEÑO NO ES DUEÑO/INQUILINO DE NADA MÁS
+		                 --> CUANDO EL INQUILINO (ASUMO QUE NO ES DUEÑO DE NADA) SE VA, VIVE SOLO Y NO ES INQUILINA DE NINGUNA OTRA UNIDAD
+		 */
+
 		personaDAO.eliminarPersonaBD(persona.toEntity());
 	}
 
@@ -233,18 +245,21 @@ public class Controlador {
 		Edificio edificio = buscarEdificio(codigo);
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
-		Reclamo reclamo = new Reclamo(persona, edificio, ubicacion, descripcion, unidad);
-		reclamo.setNumero(reclamoDAO.agregarReclamo(reclamo.toEntity()));
-		reclamo.cambiarEstado(Estado.nuevo);
-		return reclamo.getNumero();
+		Set<Persona> habilitados = edificio.habilitados();
+		for (Persona p: habilitados) {
+			if(p.getDocumento().equals(persona.getDocumento())) {
+				Reclamo reclamo = new Reclamo(persona, edificio, ubicacion, descripcion, unidad);
+				reclamo.setNumero(reclamoDAO.agregarReclamo(reclamo.toEntity()));
+				reclamo.cambiarEstado(Estado.nuevo);
+				return reclamo.getNumero();
+			}
+		}
+		return -1;
 	}
 
 	// [XXXXXXXXXXXXXXXXXXXXXXX]
 	public void agregarImagenAReclamo(int numero, String direccion, String tipo) throws ReclamoException {
 		Reclamo reclamo = buscarReclamo(numero);
-//		reclamo.agregarImagen(direccion, tipo);
-//		Imagen i = reclamo.buscarImagen(direccion);
-//		imagenDAO.agregarImagen(i.toEntity(reclamo));
 		ReclamoEntity re = reclamoDAO.obtenerReclamoEntityId(numero);
 		imagenDAO.agregarImagen(re, direccion, tipo);
 		reclamo.agregarImagen(direccion, tipo);

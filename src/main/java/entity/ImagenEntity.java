@@ -13,7 +13,7 @@ public class ImagenEntity {
     private String tipo;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idReclamo")
+    @JoinColumn(name = "idreclamo")
     private ReclamoEntity idReclamo;
 
     public ImagenEntity() {}

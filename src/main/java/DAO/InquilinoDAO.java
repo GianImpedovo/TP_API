@@ -28,6 +28,11 @@ public class InquilinoDAO {
         return resultado;
     }
 
+    public List<InquilinoEntity> obtenerPorDocumentoInquilinos(PersonaEntity persona) {
+        List<InquilinoEntity> personas = inquilinoRepository.findByDocumento(persona);
+        return personas;
+    }
+
     public void agregarInquilino(UnidadEntity unidad, PersonaEntity persona){
         InquilinoEntity nuevo = new InquilinoEntity(unidad, persona);
         inquilinoRepository.save(nuevo);

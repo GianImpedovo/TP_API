@@ -27,9 +27,6 @@ public class TpApiApplication implements CommandLineRunner{
 	@Autowired
 	Controlador controlador;
 
-	@Autowired
-	UnidadDAO unidadDAO;
-
 	Scanner entradaEscaner = new Scanner(System.in);
 	public static void main(String[] args) {
 		SpringApplication.run(TpApiApplication.class, args);
@@ -140,11 +137,88 @@ public class TpApiApplication implements CommandLineRunner{
 		System.out.println("-> Inquilinos despues:");
 		inquilinos = controlador.inquilinosPorUnidad(1, "9", "5");
 		for (PersonaView i: inquilinos)
-			System.out.println(i.toString());*/
+			System.out.println(i.toString());
 
-		// Librar unidad
-		System.out.println("-----  LIBERAR UNA UNIDAD -----");
+		entradaEscaner.nextLine();*/
 
+		// Librar unidad   CI 13230978
+		/*System.out.println("-----  LIBERAR UNA UNIDAD -----");
+		System.out.println("-> Inquilinos antes:");
+		List<PersonaView> inquilinos = controlador.inquilinosPorUnidad(1, "9", "5");
+		for (PersonaView i: inquilinos)
+			System.out.println(i.toString());
+
+		controlador.liberarUnidad(1, "9", "5");
+
+		System.out.println("-> Inquilinos despues:");
+		inquilinos = controlador.inquilinosPorUnidad(1, "9", "5");
+		for (PersonaView i: inquilinos)
+			System.out.println(i.toString());
+
+		entradaEscaner.nextLine();*/
+
+		// Habitar unidad
+		/*System.out.println("-----  HABITAR UNA UNIDAD -----");
+		controlador.habitarUnidad(1, "10", "1");
+
+		entradaEscaner.nextLine();*/
+
+		// Agregar persona
+		/*System.out.println("-----  AGREGAR PERSONA -----");
+		controlador.agregarPersona("DNI55555555", "PEREZ, JOSE");
+
+		entradaEscaner.nextLine();*/
+
+		// Eliminar persona SIN TERMINAR
+		/*System.out.println("-----  ELIMINAR PERSONA -----");
+		//controlador.agregarPersona("DNI36542189", "RODRIGUEZ, SOFIA");
+		//controlador.alquilarUnidad(1, "10", "4", "DNI36542189");
+
+		controlador.eliminarPersona("DNI36542189");
+
+		entradaEscaner.nextLine();*/
+
+		// Agregar reclamo
+		/*System.out.println("-----  AGREGAR RECLAMO -----");
+		int reclamo = controlador.agregarReclamo(1, "9", "5", "DNI39076419", "Hall de entrada", "Pérdida de agua");
+		System.out.println(reclamo);
+
+		entradaEscaner.nextLine();*/
+
+		// Agregar imagenes al reclamo
+		/*System.out.println("-----  AGREGAR IMAGEN AL RECLAMO -----");
+		controlador.agregarImagenAReclamo(2, "./imagenes", "JPG");
+
+		entradaEscaner.nextLine();*/
+
+		// Cambiar estado del reclamo
+		/*System.out.println("-----  CAMBIAR ESTADO DEL RECLAMO -----");
+		controlador.cambiarEstado(2, Estado.enProceso);
+
+		entradaEscaner.nextLine();*/
+
+		// Buscar reclamos por persona
+		/*System.out.println("-----  BUSCAR RECLAMOS POR PERSONA -----");
+		List<Reclamo> reclamos = controlador.reclamosPorPersona("DNI39076419");
+		for(Reclamo r: reclamos)
+			System.out.println(r.toString());*/
+
+		// Buscar reclamo por numero
+		/*System.out.println("-----  BUSCAR RECLAMOS POR NUMERO -----");
+		Reclamo reclamo = controlador.reclamosPorNumero(2);
+		System.out.println(reclamo.toString());*/
+
+		// Buscar reclamos por unidad
+		/*System.out.println("-----  BUSCAR RECLAMOS POR UNIDAD -----");
+		List<Reclamo> reclamos = controlador.reclamosPorUnidad(1, "9", "5");
+		for(Reclamo r: reclamos)
+			System.out.println(r.toString());*/
+
+		// Buscar reclamos por edificio
+		/*System.out.println("-----  BUSCAR RECLAMOS POR EDIFICIO -----");
+		List<Reclamo> reclamos = controlador.reclamosPorEdificio(1);
+		for(Reclamo r: reclamos)
+			System.out.println(r.toString());*/
 	}
 
 }
