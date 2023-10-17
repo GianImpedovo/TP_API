@@ -1,8 +1,7 @@
 package DAO;
 
-import entity.ImagenEntity;
-import entity.ReclamoEntity;
 import modelo.Imagen;
+import modelo.Reclamo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,14 +16,8 @@ public class ImagenDAO {
 //    public void agregarImagen(ImagenEntity imagen) {
 //        imagenRepository.save(imagen);
 //    }
-    public void agregarImagen(ReclamoEntity re, String direccion, String tipo) {
-        ImagenEntity i = new ImagenEntity(direccion, tipo, re);
+    public void agregarImagen(Imagen i) {
         imagenRepository.save(i);
-    }
-
-    public Imagen toNegocio(ImagenEntity imagen) {
-        Imagen nueva = new Imagen(imagen.getPath(), imagen.getTipo());
-        return nueva;
     }
 
 }

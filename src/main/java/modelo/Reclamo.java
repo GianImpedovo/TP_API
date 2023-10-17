@@ -3,19 +3,39 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.ReclamoEntity;
-import vista.Estado;
 
+import jakarta.persistence.*;
+import vista.Estado;
+import vista.ImagenView;
+import vista.ReclamoView;
+
+@Entity
+@Table(name = "reclamos")
 public class Reclamo {
 
-	private int idReclamo;
+	@Id
+	@Column(name = "idReclamo")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int numero;
+
+	@OneToOne
+	@JoinColumn(name = "documento", referencedColumnName = "documento")
 	private Persona usuario;
+
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "codigo")
 	private Edificio edificio;
 	private String ubicacion;
 	private String descripcion;
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "identificador")
 	private Unidad unidad;
 	private Estado estado;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "numero")
 	private List<Imagen> imagenes;
+
+	public Reclamo(){}
 
 	public Reclamo(Persona usuario, Edificio edificio, String ubicacion, String descripcion, Unidad unidad) {
 		this.usuario = usuario;
@@ -23,41 +43,21 @@ public class Reclamo {
 		this.ubicacion = ubicacion;
 		this.descripcion = descripcion;
 		this.unidad = unidad;
-		this.estado = null;
-		imagenes = new ArrayList<Imagen>();
-	}
-	
-	public Reclamo(int idReclamo, Persona usuario, Edificio edificio, String ubicacion, String descripcion, Unidad unidad) {
-		this.idReclamo = idReclamo;
-		this.usuario = usuario;
-		this.edificio = edificio;
-		this.ubicacion = ubicacion;
-		this.descripcion = descripcion;
-		this.unidad = unidad;
-		this.estado = null;
+		this.estado = Estado.nuevo;
 		imagenes = new ArrayList<Imagen>();
 	}
 
 	public void agregarImagen(String direccion, String tipo) {
-		Imagen imagen = new Imagen(direccion, tipo);
+		Imagen imagen = new Imagen(direccion, tipo, this);
 		imagenes.add(imagen);
 	}
 
-	public Imagen buscarImagen(String direccion){
-		for(Imagen i : imagenes){
-			if(i.getDireccion().equals(direccion)){
-				return i;
-			}
-		}
-		return null;
-	}
-	
 	public int getNumero() {
-		return idReclamo;
+		return numero;
 	}
 
 	public void setNumero(int numero) {
-		this.idReclamo = numero;
+		this.numero = numero;
 	}
 
 	public Persona getUsuario() {
@@ -83,23 +83,20 @@ public class Reclamo {
 	public Estado getEstado() {
 		return estado;
 	}
-	
+
 	public List<Imagen> getImagenes(){
 		return this.imagenes;
 	}
-	
+
 	public void cambiarEstado(Estado estado) {
 		this.estado = estado;
 	}
 
-	public ReclamoEntity toEntity(){
-		// PersonaEntity documento, EdificioEntity codigo, String ubicacion, String descripcion, int identificador
-		return new ReclamoEntity(this.usuario.toEntity(), this.edificio.toEntity(), this.ubicacion, this.descripcion, this.unidad.getId());
-	}
-
-
-	public String toString(){
-		return this.idReclamo + " " + this.descripcion + " " + this.estado;
+	public ReclamoView toView(){
+		List<ImagenView> viewImagenes = new ArrayList<>();
+		for (Imagen i: imagenes)
+			viewImagenes.add(i.toView());
+		return new ReclamoView(numero, usuario.toView(), edificio.toView(), ubicacion, descripcion, unidad.toView(), estado, viewImagenes);
 	}
 
 }

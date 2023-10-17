@@ -1,17 +1,19 @@
 package DAO;
 
-import entity.EdificioEntity;
-import entity.PersonaEntity;
-import entity.ReclamoEntity;
-import entity.UnidadEntity;
+import modelo.Edificio;
+import modelo.Persona;
+import modelo.Reclamo;
+import modelo.Unidad;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ReclamoRepository extends JpaRepository<ReclamoEntity, Integer> {
-    List<ReclamoEntity> findByCodigo(EdificioEntity edificio);
+public interface ReclamoRepository extends JpaRepository<Reclamo, Integer> {
+    List<Reclamo> findByEdificio(Edificio edificio);
 
-    List<ReclamoEntity> findByIdentificador(int identificador);
+    List<Reclamo> findByUnidad(Unidad unidad);
 
-    List<ReclamoEntity> findByDocumento(PersonaEntity documento);
+    List<Reclamo> findByUsuario(Persona persona);
+
 }

@@ -3,53 +3,65 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.UnidadEntity;
 import excepciones.UnidadException;
+import jakarta.persistence.*;
 import vista.EdificioView;
 import vista.UnidadView;
 
+@Entity
+@Table(name = "unidades")
 public class Unidad {
 
-	private int id;
+
+	@Id
+	@Column(name = "identificador")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int identificador;
 	private String piso;
 	private String numero;
-	private boolean habitado;
+	@Column(name = "habitado")
+	private char habitado;
+
+	@ManyToOne
+	@JoinColumn(name = "codigoedificio")
 	private Edificio edificio;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@JoinTable(name = "duenios",
+			joinColumns = @JoinColumn(name = "identificador"),
+			inverseJoinColumns = @JoinColumn(name = "documento"))
 	private List<Persona> duenios;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@JoinTable(name = "inquilinos",
+			joinColumns = @JoinColumn(name = "identificador"),
+			inverseJoinColumns = @JoinColumn(name = "documento"))
 	private List<Persona> inquilinos;
-	
-	public Unidad(int id, String piso, String numero, boolean habitado) {
-		this.id = id;
+
+	public Unidad(){}
+
+	public Unidad(int identificador, String piso, String numero, Edificio edificio) {
+		this.identificador = identificador;
 		this.piso = piso;
 		this.numero = numero;
-		this.habitado = habitado;
+		this.habitado = 'N';
 		this.edificio = edificio;
 		this.duenios = new ArrayList<Persona>();
 		this.inquilinos = new ArrayList<Persona>();
 	}
 
-//	public Unidad(int id, String piso, String numero, boolean habitado) {
-//		this.id = id;
-//		this.piso = piso;
-//		this.numero = numero;
-//		this.habitado = habitado;
-//		this.edificio = null;
-//		this.duenios = new ArrayList<Persona>();
-//		this.inquilinos = new ArrayList<Persona>();
-//	}
-
 	public void transferir(Persona nuevoDuenio) {
 		duenios = new ArrayList<Persona>();
 		duenios.add(nuevoDuenio);
 	}
-	
+
 	public void agregarDuenio(Persona duenio) {
 		duenios.add(duenio);
 	}
-	
+
 	public void alquilar(Persona inquilino) throws UnidadException {
-		if(!this.habitado) {
-			this.habitado = true;
+		if(this.habitado == 'N') {
+			this.habitado = 'S';
 			inquilinos = new ArrayList<Persona>();
 			inquilinos.add(inquilino);
 		}
@@ -60,25 +72,27 @@ public class Unidad {
 	public void agregarInquilino(Persona inquilino) {
 		inquilinos.add(inquilino);
 	}
-	
+
 	public boolean estaHabitado() {
-		return habitado;
+		if (habitado == 'S')
+			return true;
+		return false;
 	}
-	
+
 	public void liberar() {
 		this.inquilinos = new ArrayList<Persona>();
-		this.habitado = false;
+		this.habitado = 'N';
 	}
-	
+
 	public void habitar() throws UnidadException {
-		if(this.habitado)
+		if(estaHabitado())
 			throw new UnidadException("La unidad ya esta habitada");
 		else
-			this.habitado = true;
+			this.habitado = 'S';
 	}
-	
+
 	public int getId() {
-		return id;
+		return identificador;
 	}
 
 	public String getPiso() {
@@ -89,12 +103,7 @@ public class Unidad {
 		return numero;
 	}
 
-	public char getHabitado(){
-		if (habitado)
-			return 'S';
-		return 'N';
-	}
-	
+
 	public Edificio getEdificio() {
 		return edificio;
 	}
@@ -109,23 +118,14 @@ public class Unidad {
 
 	public UnidadView toView() {
 		EdificioView auxEdificio = edificio.toView();
-		return new UnidadView(id, piso, numero, habitado, auxEdificio);
+		return new UnidadView(identificador, piso, numero, estaHabitado(), auxEdificio);
 	}
 
-	public UnidadEntity toEntity(){
-		//int identificador, String piso, String numero, char habitado, EdificioEntity edificio
-		return new UnidadEntity( id, piso, numero, this.getHabitado(), edificio.toEntity() );
+	public void quitarDuenio(Persona persona) {
+		duenios.remove(persona);
 	}
 
-	public void setInquilinos(List<Persona> inquilinos){
-		this.inquilinos = inquilinos;
-	}
-
-	public void setDuenios(List<Persona> duenios){
-		this.duenios = duenios;
-	}
-
-	public void setEdificio(Edificio edificio){
-		this.edificio = edificio;
+	public void quitarInquilino(Persona persona) {
+		inquilinos.remove(persona);
 	}
 }

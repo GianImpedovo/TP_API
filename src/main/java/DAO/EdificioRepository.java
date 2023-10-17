@@ -1,13 +1,13 @@
 package DAO;
 
+import modelo.Edificio;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import entity.EdificioEntity;
 
 import java.util.Optional;
 
 
-public interface EdificioRepository extends JpaRepository<EdificioEntity, Integer>{
-    public Optional<EdificioEntity> findByCodigo(int codigo);
+public interface EdificioRepository extends JpaRepository<Edificio, Integer>{
+    public Optional<Edificio> findByCodigo(int codigo);
 
 }

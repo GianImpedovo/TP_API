@@ -1,16 +1,32 @@
 package modelo;
 
-import entity.DuenioEntity;
-import entity.PersonaEntity;
+import jakarta.persistence.*;
 import vista.PersonaView;
 
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@Table(name = "personas")
 public class Persona {
 
+	@Id
 	private String documento;
 	private String nombre;
 	private String mail;
+
+	@Column(name = "contrasenia")
 	private String password;
-	
+
+	@ManyToMany(mappedBy = "duenios", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Unidad> unidadesComoDuenio;
+
+	@ManyToMany(mappedBy = "inquilinos", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Unidad> unidadesComoInquilino;
+
+
+	public Persona (){}
+
 	public Persona(String documento, String nombre, String mail, String password) {
 		this.documento = documento;
 		this.nombre = nombre;
@@ -21,7 +37,7 @@ public class Persona {
 	public void cambiarPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getDocumento() {
 		return documento;
 	}
@@ -30,7 +46,7 @@ public class Persona {
 		return nombre;
 	}
 
-	
+
 	public String getMail() {
 		return mail;
 	}
@@ -39,13 +55,23 @@ public class Persona {
 		return password;
 	}
 
+	public List<Unidad> getUnidadesComoDuenio() {
+		return unidadesComoDuenio;
+	}
+
+	public void agregarUnidadComoDuenio(Unidad unidad){
+		unidadesComoDuenio.add(unidad);
+	}
+
+	public List<Unidad> getUnidadesComoInquilino() {
+		return unidadesComoInquilino;
+	}
+
+	public void agregarUnidadComoInquilino(Unidad unidad){
+		unidadesComoInquilino.add(unidad);
+	}
+
 	public PersonaView toView() {
 		return new PersonaView(documento, nombre);
 	}
-
-	public PersonaEntity toEntity(){
-		//String documento, String nombre, String mail, String contrasenia
-		return new PersonaEntity(documento, nombre, mail, password);
-	}
-
 }

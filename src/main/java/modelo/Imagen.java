@@ -1,16 +1,33 @@
 package modelo;
 
-import entity.ImagenEntity;
 
+import jakarta.persistence.*;
+import vista.ImagenView;
+
+@Entity
+@Table(name = "imagenes")
 public class Imagen {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int numero;
+
+	@Column(name = "path")
 	private String direccion;
+
+	@Column(name = "tipo")
 	private String tipo;
-	
-	public Imagen(String direccion, String tipo) {
+
+	@ManyToOne
+	@JoinColumn(name = "idReclamo")
+	private Reclamo idReclamo;
+
+	public Imagen(){}
+
+	public Imagen(String direccion, String tipo, Reclamo idReclamo) {
 		this.direccion = direccion;
 		this.tipo = tipo;
+		this.idReclamo = idReclamo;
 	}
 
 	public int getNumero() {
@@ -37,7 +54,7 @@ public class Imagen {
 		this.tipo = tipo;
 	}
 
-	public ImagenEntity toEntity(Reclamo reclamo){
-		return new ImagenEntity(this.direccion, this.tipo, reclamo.toEntity());
+	public ImagenView toView(){
+		return new ImagenView(numero, direccion, tipo);
 	}
 }

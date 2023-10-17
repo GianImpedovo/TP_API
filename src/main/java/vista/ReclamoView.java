@@ -12,8 +12,31 @@ public class ReclamoView {
 	private UnidadView unidad;
 	private Estado estado;
 	private List<ImagenView> imagenes;
-	
-	//Completar aplicando el patron dto
 
+	public ReclamoView(int numero, PersonaView usuario,
+					   EdificioView edificio, String ubicacion,
+					   String descripcion, UnidadView unidad,
+					   Estado estado, List<ImagenView> imagenes) {
+		this.numero = numero;
+		this.usuario = usuario;
+		this.edificio = edificio;
+		this.ubicacion = ubicacion;
+		this.descripcion = descripcion;
+		this.unidad = unidad;
+		this.estado = estado;
+		this.imagenes = imagenes;
+	}
 
+	@Override
+	public String toString() {
+		return "ReclamoView{" +
+				"numero=" + numero +
+				", usuario=" + usuario +
+				", edificio=" + edificio +
+				", ubicacion='" + ubicacion + '\'' +
+				", descripcion='" + descripcion + '\'' +
+				", unidad=" + unidad +
+				", estado=" + estado +
+				'}';
+	}
 }

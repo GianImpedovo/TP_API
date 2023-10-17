@@ -1,16 +1,14 @@
 package DAO;
 
 
-import entity.*;
 import modelo.Persona;
 import org.hibernate.sql.results.graph.entity.internal.EntityDelayedFetchImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ClientInfoStatus;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 import modelo.Unidad;
 import modelo.Edificio;
 
@@ -20,56 +18,28 @@ public class UnidadDAO {
     @Autowired
     UnidadRepository unidadRespository;
 
-    @Autowired
-    DuenioDAO duenioDAO;
-
-    @Autowired
-    InquilinoDAO inquilinoDAO;
-
 
 //        Verificar que se realiza la inyeccion
 //    public void init() {
 //        System.out.println("Se inyecta unidadRespository: " + (unidadRespository != null));
 //    }
 
-    public UnidadEntity obtenerUnidadPorIdentificador(int identificador){
-        Optional<UnidadEntity> unidad = unidadRespository.findByIdentificador(identificador);
+    public Unidad obtenerUnidadPorIdentificador(int identificador){
+        Optional<Unidad> unidad = unidadRespository.findByIdentificador(identificador);
         if (unidad.isPresent())
             return unidad.get();
         return null;
     }
 
-    public void eliminarDuenios(UnidadEntity unidad){
-        duenioDAO.eliminarDueniosUnidad(unidad);
+    public Unidad obtenerPorEdificioPisoNumero(Edificio e, String piso, String numero){
+        Optional<Unidad> unidad = unidadRespository.findByEdificioAndPisoAndNumero(e,piso,numero);
+        if (unidad.isPresent())
+            return unidad.get();
+        return null;
     }
 
-    public void agregarDuenioUnidad(PersonaEntity persona, UnidadEntity unidad){
-        duenioDAO.agregarDuenio(persona, unidad);
-    }
-
-    public void cambiarHabitado(UnidadEntity unidad){
+    public void actualizarUnidad(Unidad unidad){
         unidadRespository.save(unidad);
-    }
-
-
-    public void agregarInquilino(UnidadEntity unidad, PersonaEntity persona){
-        inquilinoDAO.agregarInquilino(unidad, persona);
-    }
-
-    public void eliminarInquilinos(UnidadEntity unidad){
-        UnidadEntity nueva = new UnidadEntity(unidad.getIdentificador(), unidad.getPiso(), unidad.getNumero(), 'N', unidad.getEdificio());
-        unidadRespository.save(nueva);
-        inquilinoDAO.eliminarInquilinosUnidad(unidad);
-    }
-
-    public Unidad toNegocio(UnidadEntity unidad){
-        //int id, String piso, String numero, boolean habitado
-        Unidad u = new Unidad(unidad.getIdentificador(), unidad.getPiso(), unidad.getNumero(), unidad.getHabitado());
-        List<Persona> duenios = duenioDAO.obtenerPorUnidad(unidad);
-        List<Persona> inquilinos = inquilinoDAO.obtenerPorUnidad(unidad);
-        u.setDuenios(duenios);
-        u.setInquilinos(inquilinos);
-        return u;
     }
 
 
