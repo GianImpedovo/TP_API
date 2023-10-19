@@ -187,10 +187,10 @@ public class TpApiApplication implements CommandLineRunner{
 //				for(ReclamoView r: reclamos)
 //			System.out.println(r.toString());
 
-		List<UnidadView> unidades = controlador.obtenerUnidades();
-		for(UnidadView u: unidades){
-			System.out.println(u.toString());
-		}
+//		List<UnidadView> unidades = controlador.obtenerUnidades();
+//		for(UnidadView u: unidades){
+//			System.out.println(u.toString());
+//		}
 	}
 
 

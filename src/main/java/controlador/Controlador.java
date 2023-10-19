@@ -256,7 +256,7 @@ public class Controlador {
 		return unidad;
 	}
 
-	private Persona buscarPersona(String documento) throws PersonaException {
+	public Persona buscarPersona(String documento) throws PersonaException {
 		Persona persona = personaDAO.obtenerPersonaDocumento(documento);
 		return persona;
 	}
@@ -279,6 +279,15 @@ public class Controlador {
 		for (Unidad u: unidades)
 			vista.add(u.toView());
 		return vista;
+	}
+
+	public PersonaView iniciarSesion(String mail){
+		Persona p = personaDAO.obtenerPersonaPorMail(mail);
+		return p.toView();
+	}
+
+	public void guardarPersona(Persona p){
+		personaDAO.actualizarPersona(p);
 	}
 
 }

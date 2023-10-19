@@ -1,32 +1,74 @@
 package rest;
 
+import DAO.PersonaDAO;
+import excepciones.PersonaException;
+import modelo.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vista.EdificioView;
 
 import java.util.List;
 import controlador.Controlador;
+import vista.PersonaView;
 import vista.UnidadView;
 
+
+class UsuarioDTO{
+    private String mail;
+    private String contrasenia;
+    private String documento;
+
+    private String nombre;
+
+    public String getMail() {
+        return mail;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public String getNombre(){
+        return nombre;
+    }
+}
+
 @RestController
-//@RequestMapping("/personas")
+@RequestMapping("/personas")
 public class ControladorRestPersona {
 
     @Autowired
-    Controlador controlador;
+    PersonaDAO personaDAO;
 
-    @GetMapping("/edificios/listar")
-    public List<EdificioView> start(){
-        return controlador.getEdificios();
+    @GetMapping("/")
+    public PersonaView recibirPersona(@RequestBody UsuarioDTO usuarioDTO) throws PersonaException {
+        return personaDAO.obtenerPersonaPorMail(usuarioDTO.getMail()).toView();
     }
 
-        @GetMapping("/personas/duenio")
-    public List<UnidadView> verUnidades(){
-        return controlador.obtenerUnidades();
+    @PutMapping("/registrar")
+    public void registrar(@RequestBody UsuarioDTO usuarioDTO) {
+        // String documento, String nombre, String mail, String password
+        Persona p = new Persona(usuarioDTO.getDocumento(), usuarioDTO.getNombre(), usuarioDTO.getMail(), usuarioDTO.getContrasenia());
+        personaDAO.agregarPersonaBD(p);
+    }
+
+    @PutMapping("/actualizar")
+    public void actualizarPersona(@RequestBody UsuarioDTO usuarioDTO)throws PersonaException{
+        Persona p = buscarPersona(usuarioDTO.getMail());
+        p.setNombre(usuarioDTO.getNombre());
+        p.setMail(usuarioDTO.getMail());
+        p.setPassword(usuarioDTO.getContrasenia());
+        personaDAO.actualizarPersona(p);
+    }
+
+    public Persona buscarPersona(String mail) throws PersonaException {
+        Persona persona = personaDAO.obtenerPersonaPorMail(mail);
+        return persona;
     }
 
 }

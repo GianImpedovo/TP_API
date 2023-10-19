@@ -27,6 +27,17 @@ public class PersonaDAO{
         return null;
     }
 
+    public Persona obtenerPersonaPorMail(String mail){
+        Optional<Persona> resultado = personaRepository.findByMail(mail);
+        if (resultado.isPresent())
+            return resultado.get();
+        return null;
+    }
+
+    public void actualizarPersona(Persona p){
+        personaRepository.save(p);
+    }
+
     public void agregarPersonaBD(Persona persona){
         personaRepository.save(persona);
     }
