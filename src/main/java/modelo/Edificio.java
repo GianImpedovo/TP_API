@@ -17,7 +17,7 @@ public class Edificio {
 	private String nombre;
 	private String direccion;
 
-	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Unidad> unidades;
 
 	public Edificio(){}

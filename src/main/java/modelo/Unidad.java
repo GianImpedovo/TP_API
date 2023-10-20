@@ -3,6 +3,10 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import excepciones.UnidadException;
 import jakarta.persistence.*;
 import vista.EdificioView;
@@ -22,20 +26,22 @@ public class Unidad {
 	@Column(name = "habitado")
 	private char habitado;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "codigoedificio")
 	private Edificio edificio;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name = "duenios",
 			joinColumns = @JoinColumn(name = "identificador"),
 			inverseJoinColumns = @JoinColumn(name = "documento"))
+	@JsonManagedReference
 	private List<Persona> duenios;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name = "inquilinos",
 			joinColumns = @JoinColumn(name = "identificador"),
 			inverseJoinColumns = @JoinColumn(name = "documento"))
+	@JsonManagedReference
 	private List<Persona> inquilinos;
 
 	public Unidad(){}

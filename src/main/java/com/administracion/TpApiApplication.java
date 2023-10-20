@@ -1,6 +1,7 @@
 package com.administracion;
 
 import controlador.Controlador;
+import modelo.Unidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -191,6 +192,10 @@ public class TpApiApplication implements CommandLineRunner{
 //		for(UnidadView u: unidades){
 //			System.out.println(u.toString());
 //		}
+
+//		List<Unidad> unidades = controlador.buscarPersona("DNI41200440").getUnidadesComoDuenio();
+//		for (Unidad u: unidades)
+//			System.out.println(u.toView().toString());
 	}
 
 

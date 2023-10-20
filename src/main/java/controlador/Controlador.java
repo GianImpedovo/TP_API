@@ -167,16 +167,16 @@ public class Controlador {
 	}
 
 	// [x]
-	public void agregarPersona(String documento, String nombre) {
-		Persona persona = new Persona(documento, nombre, null, null);
-		personaDAO.agregarPersonaBD(persona);
-	}
-
-	// [x]
-	public void eliminarPersona(String documento) throws PersonaException {
-		Persona persona = buscarPersona(documento);
-		personaDAO.eliminarPersonaBD(persona);
-	}
+//	public void agregarPersona(String documento, String nombre) {
+//		Persona persona = new Persona(documento, nombre, null, null);
+//		personaDAO.agregarPersonaBD(persona);
+//	}
+//
+//	// [x]
+//	public void eliminarPersona(String documento) throws PersonaException {
+//		Persona persona = buscarPersona(documento);
+//		personaDAO.eliminarPersonaBD(persona);
+//	}
 
 	// ------------------------------------ Hasta aca venimos 10/10 --------------------------------------
 

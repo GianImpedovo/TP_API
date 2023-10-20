@@ -1,5 +1,7 @@
 package modelo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import vista.PersonaView;
 
@@ -18,10 +20,12 @@ public class Persona {
 	@Column(name = "contrasenia")
 	private String password;
 
-	@ManyToMany(mappedBy = "duenios", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "duenios", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonBackReference
 	private List<Unidad> unidadesComoDuenio;
 
-	@ManyToMany(mappedBy = "inquilinos", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "inquilinos", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonBackReference
 	private List<Unidad> unidadesComoInquilino;
 
 
@@ -84,6 +88,6 @@ public class Persona {
 	}
 
 	public PersonaView toView() {
-		return new PersonaView(documento, nombre);
+		return new PersonaView(documento, nombre, mail);
 	}
 }

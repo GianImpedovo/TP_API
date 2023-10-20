@@ -56,4 +56,24 @@ public class PersonaDAO{
         personaRepository.delete(persona);
     }
 
+    public List<Unidad> obtenerUnidadesComoDuenio(String mail) {
+        Persona persona = personaRepository.findByMail(mail).orElse(null);
+        if (persona != null) {
+            List<Unidad> unidades = persona.getUnidadesComoDuenio();
+            return unidades;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Unidad> obtenerUnidadesComoInquilino(String mail) {
+        Persona persona = personaRepository.findByMail(mail).orElse(null);
+        if (persona != null) {
+            List<Unidad> unidades = persona.getUnidadesComoInquilino();
+            return unidades;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
 }
