@@ -9,6 +9,7 @@ import vista.ImagenView;
 public class Imagen {
 
 	@Id
+	@Column(name = "numero")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int numero;
 
@@ -34,10 +35,6 @@ public class Imagen {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
 	public String getDireccion() {
 		return direccion;
 	}
@@ -55,6 +52,6 @@ public class Imagen {
 	}
 
 	public ImagenView toView(){
-		return new ImagenView(numero, direccion, tipo);
+		return new ImagenView(direccion, tipo);
 	}
 }

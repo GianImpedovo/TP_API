@@ -22,8 +22,7 @@ public class Edificio {
 
 	public Edificio(){}
 
-	public Edificio(int codigo, String nombre, String direccion) {
-		this.codigo = codigo;
+	public Edificio( String nombre, String direccion) {
 		this.nombre = nombre;
 		this.direccion = direccion;
 		unidades = new ArrayList<Unidad>();

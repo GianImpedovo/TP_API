@@ -1,26 +1,17 @@
 package vista;
 
 public class ImagenView {
-	
-	private int numero;
+
 	private String direccion;
 	private String tipo;
 	
 	public ImagenView() {}
 
-	public ImagenView(int numero, String direccion, String tipo) {
-		this.numero = numero;
+	public ImagenView(String direccion, String tipo) {
 		this.direccion = direccion;
 		this.tipo = tipo;
 	}
 
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
 
 	public String getDireccion() {
 		return direccion;

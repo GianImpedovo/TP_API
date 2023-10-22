@@ -27,6 +27,34 @@ public class ReclamoView {
 		this.imagenes = imagenes;
 	}
 
+	public int getNumero() {
+		return numero;
+	}
+
+	public PersonaView getUsuario() {
+		return usuario;
+	}
+
+	public EdificioView getEdificio() {
+		return edificio;
+	}
+
+	public String getUbicacion() {
+		return ubicacion;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public UnidadView getUnidad() {
+		return unidad;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
 	@Override
 	public String toString() {
 		return "ReclamoView{" +

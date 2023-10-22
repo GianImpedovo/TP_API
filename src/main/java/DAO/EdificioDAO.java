@@ -36,4 +36,12 @@ public class EdificioDAO {
         return null;
     }
 
+    public void eliminarEdificio(Edificio e){
+        edificioRepositorio.delete(e);
+    }
+
+    public void guardarEdificio(Edificio edificio){
+        edificioRepositorio.save(edificio);
+    }
+
 }

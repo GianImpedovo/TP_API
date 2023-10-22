@@ -16,23 +16,23 @@ public class Reclamo {
 	@Id
 	@Column(name = "idReclamo")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int numero;
+	private int id;
 
 	@OneToOne
 	@JoinColumn(name = "documento", referencedColumnName = "documento")
 	private Persona usuario;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "codigo")
 	private Edificio edificio;
 	private String ubicacion;
 	private String descripcion;
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "identificador")
 	private Unidad unidad;
 	private Estado estado;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "numero")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "idReclamo")
 	private List<Imagen> imagenes;
 
 	public Reclamo(){}
@@ -47,17 +47,16 @@ public class Reclamo {
 		imagenes = new ArrayList<Imagen>();
 	}
 
-	public void agregarImagen(String direccion, String tipo) {
-		Imagen imagen = new Imagen(direccion, tipo, this);
-		imagenes.add(imagen);
+	public void agregarImagen(Imagen i) {
+		imagenes.add(i);
 	}
 
 	public int getNumero() {
-		return numero;
+		return id;
 	}
 
 	public void setNumero(int numero) {
-		this.numero = numero;
+		this.id = numero;
 	}
 
 	public Persona getUsuario() {
@@ -88,15 +87,32 @@ public class Reclamo {
 		return this.imagenes;
 	}
 
-	public void cambiarEstado(Estado estado) {
-		this.estado = estado;
+	public void cambiarEstado(int estado) {
+		if (estado == 0){
+			this.estado = Estado.nuevo;
+		}
+		if (estado == 1){
+			this.estado = Estado.abierto;
+		}
+		if (estado == 2){
+			this.estado = Estado.enProceso;
+		}
+		if (estado == 3){
+			this.estado = Estado.desestimado;
+		}
+		if (estado == 4){
+			this.estado = Estado.anulado;
+		}
+		if (estado == 5){
+			this.estado = Estado.terminado;
+		}
 	}
 
 	public ReclamoView toView(){
 		List<ImagenView> viewImagenes = new ArrayList<>();
 		for (Imagen i: imagenes)
 			viewImagenes.add(i.toView());
-		return new ReclamoView(numero, usuario.toView(), edificio.toView(), ubicacion, descripcion, unidad.toView(), estado, viewImagenes);
+		return new ReclamoView(id, usuario.toView(), edificio.toView(), ubicacion, descripcion, unidad.toView(), estado, viewImagenes);
 	}
 
 }

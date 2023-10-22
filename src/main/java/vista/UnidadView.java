@@ -7,6 +7,8 @@ public class UnidadView {
 	private String numero;
 	private boolean habitado;
 	private EdificioView edificio;
+
+	private PersonaView persona;
 	
 	public UnidadView() {}
 
@@ -38,6 +40,10 @@ public class UnidadView {
 		return numero;
 	}
 
+	public PersonaView getPersona(){
+		return persona;
+	}
+
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
@@ -56,6 +62,10 @@ public class UnidadView {
 
 	public void setEdificio(EdificioView edificio) {
 		this.edificio = edificio;
+	}
+
+	public void setPersona(PersonaView persona){
+		this.persona = persona;
 	}
 	
 	public String toString() {
