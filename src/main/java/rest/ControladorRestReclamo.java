@@ -62,6 +62,15 @@ public class ControladorRestReclamo {
         return -1;
     }
 
+    @PutMapping("/agregar/imagen/{id}")
+    public void agregarImagenAReclamo(@PathVariable int id, @RequestBody ImagenView i) throws ReclamoException {
+        Reclamo reclamo = buscarReclamo(id);
+        System.out.println(reclamo.getNumero());
+        Imagen imagen = new Imagen(i.getDireccion(), i.getTipo(), reclamo);
+        reclamo.agregarImagen(imagen);
+        imagenDAO.agregarImagen(imagen);
+    }
+
     @GetMapping("/unidad")
     public List<ReclamoView> reclamosPorUnidad(@RequestBody ReclamoView reclamo) throws UnidadException, EdificioException{
         Unidad unidad = buscarUnidad(reclamo.getEdificio().getCodigo(), reclamo.getUnidad().getPiso(), reclamo.getUnidad().getNumero());
@@ -82,15 +91,6 @@ public class ControladorRestReclamo {
         List<Reclamo> resultado = reclamoDAO.obtenerReclamoDocumento(persona);
         List<ReclamoView> reclamos = obtenerListaReclamoView(resultado);
         return reclamos;
-    }
-
-    @PutMapping("/agregar/imagen/{id}")
-    public void agregarImagenAReclamo(@PathVariable int id, @RequestBody ImagenView i) throws ReclamoException {
-        Reclamo reclamo = buscarReclamo(id);
-        System.out.println(reclamo.getNumero());
-        Imagen imagen = new Imagen(i.getDireccion(), i.getTipo(), reclamo);
-        reclamo.agregarImagen(imagen);
-        imagenDAO.agregarImagen(imagen);
     }
 
     @PutMapping("/cambiarEstado:{numero}/estado={estado}")
