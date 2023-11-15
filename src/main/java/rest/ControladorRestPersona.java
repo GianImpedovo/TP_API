@@ -14,6 +14,7 @@ import vista.PersonaView;
 import vista.UnidadView;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("/personas")
 public class ControladorRestPersona {

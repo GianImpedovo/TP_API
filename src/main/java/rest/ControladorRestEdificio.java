@@ -15,12 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/edificios")
 public class ControladorRestEdificio {
 
     @Autowired
     EdificioDAO edificioDAO;
+
 
     @GetMapping("/")
     public List<EdificioView> getEdificios(){

@@ -18,6 +18,7 @@ import vista.UnidadView;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/unidades")
 public class ControladorRestUnidad {
