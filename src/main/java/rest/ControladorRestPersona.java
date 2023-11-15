@@ -42,7 +42,6 @@ public class ControladorRestPersona {
         return unidades;
     }
 
-    // Agregar persona
     @PutMapping("/registrar")
     public void registrar(@RequestBody PersonaView usuario) {
         // String documento, String nombre, String mail, String password
@@ -53,13 +52,15 @@ public class ControladorRestPersona {
     @PutMapping("/actualizar")
     public void actualizarPersona(@RequestBody PersonaView usuario)throws PersonaException{
         Persona p = buscarPersona(usuario.getMail());
-        p.setNombre(usuario.getNombre());
-        p.setMail(usuario.getMail());
-        p.setPassword(usuario.getContrasenia());
+        if (usuario.getNombre() != null && !usuario.getNombre().isEmpty()) {
+            p.setNombre(usuario.getNombre());
+        }
+        if (usuario.getContrasenia() != null && !usuario.getContrasenia().isEmpty()) {
+            p.setPassword(usuario.getContrasenia());
+        }
         personaDAO.actualizarPersona(p);
     }
 
-    // Elimina la persona
     @DeleteMapping("/eliminar/{mail}")
     public void eliminarPersona(@PathVariable String mail) throws PersonaException{
         Persona persona = buscarPersona(mail);

@@ -42,5 +42,12 @@ public class UnidadDAO {
         unidadRespository.save(unidad);
     }
 
+    public void agregarUnidadBD(Unidad u){
+        unidadRespository.save(u);
+    }
+
+    public void eliminarUnidadBD(Unidad u){
+        unidadRespository.delete(u);
+    }
 
 }

@@ -98,6 +98,20 @@ public class ControladorRestUnidad {
         unidadDAO.actualizarUnidad(unidad);
     }
 
+    @PutMapping("/agregar")
+    public void agregarUnidad(@RequestBody UnidadView u) throws EdificioException{
+        //String piso, String numero, Edificio edificio
+        Edificio e = buscarEdificio(u.getEdificio().getCodigo());
+        Unidad nueva = new Unidad(u.getPiso(), u.getNumero(),e);
+        unidadDAO.agregarUnidadBD(nueva);
+    }
+
+    @PutMapping("/eliminar")
+    public void eliminarUnidad(@RequestBody UnidadView u) throws UnidadException, EdificioException{
+        Unidad eliminar = buscarUnidad(u.getEdificio().getCodigo(), u.getPiso(), u.getNumero());
+        unidadDAO.eliminarUnidadBD(eliminar);
+    }
+
     private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException{
         Edificio edificio = buscarEdificio(codigo);
         Unidad unidad = unidadDAO.obtenerPorEdificioPisoNumero(edificio, piso, numero);
