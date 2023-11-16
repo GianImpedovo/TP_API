@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import vista.PersonaView;
 import vista.UnidadView;
@@ -40,6 +42,20 @@ public class ControladorRestPersona {
         List<Unidad> resultado = personaDAO.obtenerUnidadesComoInquilino(mail);
         List<UnidadView> unidades = pasarAUnidadView(resultado);
         return unidades;
+    }
+
+    @GetMapping("/habilitado:{mail}")
+    public Set<UnidadView> obtenerUnidades(@PathVariable String mail){
+        List<Unidad> unidadDuenio = personaDAO.obtenerUnidadesComoInquilino(mail);
+        List<Unidad>  unidadInquilino = personaDAO.obtenerUnidadesComoDuenio(mail);
+        Set<UnidadView> listado = new HashSet<>();
+
+        for (Unidad u: unidadDuenio)
+            listado.add(u.toView());
+        for (Unidad u: unidadInquilino)
+            listado.add(u.toView());
+
+        return listado;
     }
 
     @PutMapping("/registrar")
