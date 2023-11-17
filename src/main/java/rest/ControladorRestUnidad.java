@@ -32,20 +32,20 @@ public class ControladorRestUnidad {
     @Autowired
     PersonaDAO personaDAO;
 
-    @GetMapping("/duenios")
-    public List<PersonaView> dueniosPorUnidad(@RequestBody UnidadView u) throws UnidadException, EdificioException {
+    @GetMapping("/duenios/codigo:{codigo}?piso:{piso}?numero:{numero}")
+    public List<PersonaView> dueniosPorUnidad(@PathVariable int codigo, @PathVariable String piso, @PathVariable String numero) throws UnidadException, EdificioException {
         List<PersonaView> resultado = new ArrayList<PersonaView>();
-        Unidad unidad = buscarUnidad(u.getEdificio().getCodigo(), u.getPiso(), u.getNumero());
+        Unidad unidad = buscarUnidad(codigo, piso, numero);
         List<Persona> duenios = unidad.getDuenios();
         for(Persona persona : duenios)
             resultado.add(persona.toView());
         return resultado;
     }
 
-    @GetMapping("/inquilinos")
-    public List<PersonaView> inquilinosPorUnidad(@RequestBody UnidadView u) throws UnidadException, EdificioException{
+    @GetMapping("/inquilinos/codigo:{codigo}?piso:{piso}?numero:{numero}")
+    public List<PersonaView> inquilinosPorUnidad(@PathVariable int codigo, @PathVariable String piso, @PathVariable String numero) throws UnidadException, EdificioException{
         List<PersonaView> resultado = new ArrayList<PersonaView>();
-        Unidad unidad = buscarUnidad(u.getEdificio().getCodigo(), u.getPiso(), u.getNumero());
+        Unidad unidad = buscarUnidad(codigo, piso, numero);
         List<Persona> inquilinos = unidad.getInquilinos();
         for(Persona persona : inquilinos)
             resultado.add(persona.toView());

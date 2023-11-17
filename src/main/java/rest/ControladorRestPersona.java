@@ -25,9 +25,9 @@ public class ControladorRestPersona {
     PersonaDAO personaDAO;
 
 
-    @GetMapping("/")
-    public PersonaView recibirPersona(@RequestBody PersonaView usuario) throws PersonaException {
-        return personaDAO.obtenerPersonaPorMail(usuario.getMail()).toView();
+    @GetMapping("/{mail}")
+    public PersonaView recibirPersona(@PathVariable String mail) throws PersonaException {
+        return personaDAO.obtenerPersonaPorMail(mail).toView();
     }
 
     @GetMapping("/duenio/{mail}")

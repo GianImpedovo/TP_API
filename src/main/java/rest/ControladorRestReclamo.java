@@ -72,9 +72,9 @@ public class ControladorRestReclamo {
         imagenDAO.agregarImagen(imagen);
     }
 
-    @GetMapping("/unidad")
-    public List<ReclamoView> reclamosPorUnidad(@RequestBody ReclamoView reclamo) throws UnidadException, EdificioException{
-        Unidad unidad = buscarUnidad(reclamo.getEdificio().getCodigo(), reclamo.getUnidad().getPiso(), reclamo.getUnidad().getNumero());
+    @GetMapping("/unidad/codigo:{codigo}?piso:{piso}?numero:{numero}")
+    public List<ReclamoView> reclamosPorUnidad(@PathVariable int codigo, @PathVariable String piso, @PathVariable String numero) throws UnidadException, EdificioException{
+        Unidad unidad = buscarUnidad(codigo, piso, numero);
         List<Reclamo> resultado = reclamoDAO.obtenerReclamoUnidad(unidad);
         List<ReclamoView> reclamos= obtenerListaReclamoView(resultado);
         return reclamos;
