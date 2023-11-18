@@ -32,7 +32,7 @@ public class ControladorRestUnidad {
     @Autowired
     PersonaDAO personaDAO;
 
-    @GetMapping("/duenios/codigo:{codigo}?piso:{piso}?numero:{numero}")
+    @GetMapping("/duenios/codigo:{codigo}/piso:{piso}/numero:{numero}")
     public List<PersonaView> dueniosPorUnidad(@PathVariable int codigo, @PathVariable String piso, @PathVariable String numero) throws UnidadException, EdificioException {
         List<PersonaView> resultado = new ArrayList<PersonaView>();
         Unidad unidad = buscarUnidad(codigo, piso, numero);
@@ -42,7 +42,7 @@ public class ControladorRestUnidad {
         return resultado;
     }
 
-    @GetMapping("/inquilinos/codigo:{codigo}?piso:{piso}?numero:{numero}")
+    @GetMapping("/inquilinos/codigo:{codigo}/piso:{piso}/numero:{numero}")
     public List<PersonaView> inquilinosPorUnidad(@PathVariable int codigo, @PathVariable String piso, @PathVariable String numero) throws UnidadException, EdificioException{
         List<PersonaView> resultado = new ArrayList<PersonaView>();
         Unidad unidad = buscarUnidad(codigo, piso, numero);
