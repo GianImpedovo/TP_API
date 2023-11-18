@@ -25,9 +25,17 @@ public class ControladorRestPersona {
     PersonaDAO personaDAO;
 
 
-    @GetMapping("/{mail}")
-    public PersonaView recibirPersona(@PathVariable String mail) throws PersonaException {
-        return personaDAO.obtenerPersonaPorMail(mail).toView();
+    @GetMapping("/{mail}:{contrasenia}")
+    public PersonaView recibirPersona(@PathVariable String mail, @PathVariable String contrasenia) throws PersonaException {
+        Persona p = personaDAO.obtenerPersonaPorMail(mail);
+        if( p != null){
+            if(p.getPassword().equals(contrasenia))
+                return p.toView();
+            else
+                return new PersonaView("","", "");
+        } else{
+            return new PersonaView("","", "");
+        }
     }
 
     @GetMapping("/duenio/{mail}")
