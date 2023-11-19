@@ -22,16 +22,16 @@ public class Reclamo {
 	@JoinColumn(name = "documento", referencedColumnName = "documento")
 	private Persona usuario;
 
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "codigo")
 	private Edificio edificio;
 	private String ubicacion;
 	private String descripcion;
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "identificador")
 	private Unidad unidad;
 	private Estado estado;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idReclamo")
 	private List<Imagen> imagenes;
 

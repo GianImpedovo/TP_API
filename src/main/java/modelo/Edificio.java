@@ -20,6 +20,9 @@ public class Edificio {
 	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Unidad> unidades;
 
+	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Reclamo> reclamos;
+
 	public Edificio(){}
 
 	public Edificio( String nombre, String direccion) {
