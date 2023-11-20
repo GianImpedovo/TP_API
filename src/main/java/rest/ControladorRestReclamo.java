@@ -101,6 +101,16 @@ public class ControladorRestReclamo {
         reclamoDAO.actualizarReclamo(reclamo);
     }
 
+    @GetMapping("/imagenes:{id}")
+    public List<ImagenView> obtenerImagenes(@PathVariable int id) throws ReclamoException {
+        List<Imagen> imagenes = buscarReclamo(id).getImagenes();
+        List<ImagenView> resultado = new ArrayList<>();
+        for (Imagen i: imagenes)
+            resultado.add(i.toView());
+
+        return resultado;
+    }
+
     private Edificio buscarEdificio(int codigo) throws EdificioException {
         Edificio edificio = edificioDAO.obtenerEdificioCodigo(codigo);
         return edificio;
