@@ -74,4 +74,8 @@ public class ReclamoDAO {
         return reclamos;
     }
 
+    public void eliminarReclamo(Reclamo r){
+        reclamoRepository.delete(r);
+    }
+
 }

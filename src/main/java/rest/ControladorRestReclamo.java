@@ -111,6 +111,12 @@ public class ControladorRestReclamo {
         return resultado;
     }
 
+    @DeleteMapping("/eliminar/{id}")
+    public void eliminarReclamo(@PathVariable int id) throws ReclamoException{
+        Reclamo r = buscarReclamo(id);
+        reclamoDAO.eliminarReclamo(r);
+    }
+
     private Edificio buscarEdificio(int codigo) throws EdificioException {
         Edificio edificio = edificioDAO.obtenerEdificioCodigo(codigo);
         return edificio;
