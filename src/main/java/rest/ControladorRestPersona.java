@@ -76,9 +76,6 @@ public class ControladorRestPersona {
     @PutMapping("/actualizar")
     public void actualizarPersona(@RequestBody PersonaView usuario)throws PersonaException{
         Persona p = buscarPersona(usuario.getMail());
-        if (usuario.getNombre() != null && !usuario.getNombre().isEmpty()) {
-            p.setNombre(usuario.getNombre());
-        }
         if (usuario.getContrasenia() != null && !usuario.getContrasenia().isEmpty()) {
             p.setPassword(usuario.getContrasenia());
         }

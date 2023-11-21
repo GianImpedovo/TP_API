@@ -78,4 +78,9 @@ public class ReclamoDAO {
         reclamoRepository.delete(r);
     }
 
+    public List<Reclamo> obtenerReclamoPorEstado(Estado estado){
+        List<Reclamo> reclamos = reclamoRepository.findByEstado(estado);
+        return reclamos;
+    }
+
 }

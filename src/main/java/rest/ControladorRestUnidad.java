@@ -112,6 +112,19 @@ public class ControladorRestUnidad {
         unidadDAO.eliminarUnidadBD(eliminar);
     }
 
+    @PutMapping("/registrar/codigo:{codigo}/piso:{piso}/numero:{numero}")
+    private void registrarUnidad(@PathVariable int codigo, @PathVariable String piso, @PathVariable String numero) throws EdificioException {
+        Edificio edificio = buscarEdificio(codigo);
+        Unidad nueva = new Unidad(piso, numero, edificio);
+        unidadDAO.agregarUnidadBD(nueva);
+    }
+
+    @DeleteMapping("/eliminar/codigo:{codigo}/piso:{piso}/numero:{numero}")
+    private void eliminarUnidad(@PathVariable int codigo, @PathVariable String piso, @PathVariable String numero) throws UnidadException, EdificioException{
+        Unidad u = buscarUnidad(codigo, piso, numero);
+        unidadDAO.eliminarUnidadBD(u);
+    }
+
     private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException, EdificioException{
         Edificio edificio = buscarEdificio(codigo);
         Unidad unidad = unidadDAO.obtenerPorEdificioPisoNumero(edificio, piso, numero);

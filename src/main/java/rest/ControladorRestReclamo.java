@@ -94,6 +94,13 @@ public class ControladorRestReclamo {
         return reclamos;
     }
 
+    @GetMapping("/estado:{estado}")
+    public List<ReclamoView> reclamosPorEstado(@PathVariable Estado estado) throws PersonaException{
+        List<Reclamo> resultado = reclamoDAO.obtenerReclamoPorEstado(estado);
+        List<ReclamoView> reclamos = obtenerListaReclamoView(resultado);
+        return reclamos;
+    }
+
     @PutMapping("/cambiarEstado:{numero}/estado={estado}")
     public void cambiarEstado(@PathVariable int numero,@PathVariable int estado) throws ReclamoException {
         Reclamo reclamo = buscarReclamo(numero);
