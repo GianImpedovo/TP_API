@@ -17,10 +17,10 @@ public class Edificio {
 	private String nombre;
 	private String direccion;
 
-	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Unidad> unidades;
 
-	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Reclamo> reclamos;
 
 	public Edificio(){}
@@ -91,6 +91,10 @@ public class Edificio {
 			}
 		}
 		return resultado;
+	}
+
+	public List<Reclamo> getReclamos(){
+		return reclamos;
 	}
 
 	public EdificioView toView() {

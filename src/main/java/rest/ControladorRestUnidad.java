@@ -122,6 +122,9 @@ public class ControladorRestUnidad {
     @DeleteMapping("/eliminar/codigo:{codigo}/piso:{piso}/numero:{numero}")
     private void eliminarUnidad(@PathVariable int codigo, @PathVariable String piso, @PathVariable String numero) throws UnidadException, EdificioException{
         Unidad u = buscarUnidad(codigo, piso, numero);
+        u.getInquilinos().clear();
+        u.getDuenios().clear();
+        unidadDAO.actualizarUnidad(u);
         unidadDAO.eliminarUnidadBD(u);
     }
 

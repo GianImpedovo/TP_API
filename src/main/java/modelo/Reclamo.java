@@ -108,6 +108,10 @@ public class Reclamo {
 		}
 	}
 
+	public void setUsuario(Persona p){
+		this.usuario = p;
+	}
+
 	public ReclamoView toView(){
 		List<ImagenView> viewImagenes = new ArrayList<>();
 		for (Imagen i: imagenes)

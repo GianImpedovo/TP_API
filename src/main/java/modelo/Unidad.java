@@ -34,14 +34,12 @@ public class Unidad {
 	@JoinTable(name = "duenios",
 			joinColumns = @JoinColumn(name = "identificador"),
 			inverseJoinColumns = @JoinColumn(name = "documento"))
-	@JsonManagedReference
 	private List<Persona> duenios;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name = "inquilinos",
 			joinColumns = @JoinColumn(name = "identificador"),
 			inverseJoinColumns = @JoinColumn(name = "documento"))
-	@JsonManagedReference
 	private List<Persona> inquilinos;
 
 	public Unidad(){}

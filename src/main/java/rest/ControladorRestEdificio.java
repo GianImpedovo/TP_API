@@ -1,9 +1,12 @@
 package rest;
 
 import DAO.EdificioDAO;
+import DAO.ReclamoDAO;
+import DAO.UnidadDAO;
 import excepciones.EdificioException;
 import modelo.Edificio;
 import modelo.Persona;
+import modelo.Reclamo;
 import modelo.Unidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,9 @@ public class ControladorRestEdificio {
 
     @Autowired
     EdificioDAO edificioDAO;
+
+    @Autowired
+    UnidadDAO unidadDAO;
 
 
     @GetMapping("/")
@@ -82,6 +88,13 @@ public class ControladorRestEdificio {
     @DeleteMapping("/eliminar/{codigo}")
     public void eliminarEdificio(@PathVariable int codigo) throws EdificioException{
         Edificio e = buscarEdificio(codigo);
+        List<Unidad> unidades = e.getUnidades();
+        for (Unidad u: unidades){
+            u.getInquilinos().clear();
+            u.getDuenios().clear();
+            unidadDAO.actualizarUnidad(u);
+            unidadDAO.eliminarUnidadBD(u);
+        }
         edificioDAO.eliminarEdificio(e);
     }
 
